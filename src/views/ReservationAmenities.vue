@@ -1,7 +1,9 @@
 <template>
   <div>
     <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
-      <h2 class="text-2xl font-medium mr-auto">Reserva Amenidades</h2>
+      <h2 class="text-2xl font-medium mr-auto border-b-2">
+        Reserva Amenidades
+      </h2>
     </div>
     <!-- BEGIN: HTML Table Data -->
     <div class="intro-y box p-5 mt-5">
@@ -140,12 +142,9 @@ export default {
           download: false,
           formatter() {
             return `<div class="flex lg:justify-center items-center">
-              <a class="flex items-center mr-3" href="">
-                <i data-feather="check-square" class="w-4 h-4 mr-1"></i> Edit
-              </a>
-              <a class="flex items-center text-theme-6" href="">
-                <i data-feather="trash-2" class="w-4 h-4 mr-1"></i> Delete
-              </a>
+              <a class="flex items-center mr-3" href="/reservation-amenities-edit">
+                <i data-feather="check-square" class="w-4 h-4 mr-1"></i> Editar
+              </a>              
             </div>`;
           }
         },

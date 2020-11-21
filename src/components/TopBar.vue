@@ -2,12 +2,12 @@
   <!-- BEGIN: Top Bar -->
   <div class="top-bar">
     <!-- BEGIN: Breadcrumb -->
-    <div class="-intro-x breadcrumb mr-auto hidden sm:flex">
+    <div class="-intro-x breadcrumb ml-auto mr-auto hidden sm:flex">
       <!-- <a href class>Application</a>
       <ChevronRightIcon class="breadcrumb__icon" />
       <a href class="breadcrumb--active">Dashboard</a> -->
-      <span class="text-3xl text-yellow-600">
-        Edificio Prueba Convocatoria
+      <span class="text-3xl justify-center font-bold italic">
+        EDIFICIO PRUEBA CONVOCATORIA
       </span>
     </div>
     <!-- END: Breadcrumb -->

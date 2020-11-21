@@ -5,6 +5,8 @@ import Dashboard from "../views/Dashboard";
 import Inbox from "../views/Inbox";
 import ReceptionLog from "../views/ReceptionLog";
 import ReservationAmenities from "../views/ReservationAmenities";
+import ReservationAmenitiesEdit from "../views/ReservationAmenitiesEdit";
+import ListAmenities from "../views/ListAmenities";
 import Login from "../views/Login";
 import Register from "../views/Register";
 import ErrorPage from "../views/ErrorPage";
@@ -30,6 +32,16 @@ const routes = [
         path: "reservation-amenities",
         name: "side-menu-reserva-amenidades",
         component: ReservationAmenities
+      },
+      {
+        path: "reservation-amenities-edit",
+        name: "side-menu-reserva-amenidades-edit",
+        component: ReservationAmenitiesEdit
+      },
+      {
+        path: "list-amenities",
+        name: "side-menu-lista-amenidades",
+        component: ListAmenities
       },
       {
         path: "inbox",
