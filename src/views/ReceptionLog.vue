@@ -1,7 +1,9 @@
 <template>
   <div>
     <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
-      <h2 class="text-2xl font-medium mr-auto">Bitacora Recepción</h2>
+      <h2 class="text-2xl font-medium mr-auto border-b-2">
+        Bitacora Recepción
+      </h2>
     </div>
     <!-- BEGIN: HTML Date and buttons -->
     <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
@@ -235,6 +237,25 @@ export default {
 
         // For HTML table
         {
+          title: "Ingreso",
+          minWidth: 200,
+          responsive: 0,
+          field: "name",
+          vertAlign: "middle",
+          print: false,
+          download: false,
+          formatter(cell) {
+            return `<div>
+              <div class="font-medium whitespace-no-wrap">${
+                cell.getData().name
+              }</div>
+              <div class="text-gray-600 text-xs whitespace-no-wrap">${
+                cell.getData().category
+              }</div>
+            </div>`;
+          }
+        },
+        {
           title: "Nombre",
           minWidth: 200,
           responsive: 0,
@@ -318,7 +339,7 @@ export default {
             return `<div class="flex lg:justify-center items-center">
               <a class="flex items-center mr-3" id="btnEditar">
                 <i data-feather="check-square" class="w-4 h-4 mr-1"></i> Edit
-              </a>    
+              </a>
             </div>`;
           }
         }

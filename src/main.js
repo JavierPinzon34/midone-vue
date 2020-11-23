@@ -5,6 +5,8 @@ import store from "./store";
 import "./global-components";
 import "./utils";
 import "./libs";
+import VCalendar from "v-calendar";
+Vue.use(VCalendar);
 
 // Midone Theme
 import "./assets/sass/app.scss";

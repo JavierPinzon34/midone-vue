@@ -4,9 +4,12 @@ import SideMenu from "../layouts/SideMenu";
 import Dashboard from "../views/Dashboard";
 import Inbox from "../views/Inbox";
 import ReceptionLog from "../views/ReceptionLog";
+import ReservationCalendar from "../views/ReservationCalendar";
+import AmenityCalendar from "../views/AmenityCalendar";
 import ReservationAmenities from "../views/ReservationAmenities";
 import ReservationAmenitiesEdit from "../views/ReservationAmenitiesEdit";
 import ListAmenities from "../views/ListAmenities";
+import AmenityEdit from "../views/AmenityEdit";
 import Login from "../views/Login";
 import Register from "../views/Register";
 import ErrorPage from "../views/ErrorPage";
@@ -29,14 +32,29 @@ const routes = [
         component: ReceptionLog
       },
       {
+        path: "reservation-calendar",
+        name: "side-menu-calendario-reservas",
+        component: ReservationCalendar
+      },
+      {
+        path: "amenity-calendar",
+        name: "side-menu-calendario-amenidades",
+        component: AmenityCalendar
+      },
+      {
         path: "reservation-amenities",
         name: "side-menu-reserva-amenidades",
         component: ReservationAmenities
       },
       {
         path: "reservation-amenities-edit",
-        name: "side-menu-reserva-amenidades-edit",
+        name: "side-menu-reserva-amenidades-edicion",
         component: ReservationAmenitiesEdit
+      },
+      {
+        path: "amenity-edit",
+        name: "side-menu-amenidades-edicion",
+        component: AmenityEdit
       },
       {
         path: "list-amenities",

@@ -32,22 +32,18 @@
     <div
       class="flex items-center px-5 py-3 border-t border-gray-200 dark:border-dark-5"
     >
-      <Tippy
-        tag="a"
-        href=""
-        class="intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-14 dark:bg-dark-5 dark:text-gray-300 text-theme-10 ml-auto"
-        content="Editar"
+      <router-link
+        to="/amenity-edit"
+        class="intro-x w-8 h-8 flex items-center ml-auto justify-center rounded-full bg-theme-3 text-white ml-2"
       >
         <EditIcon class="w-3 h-3" />
-      </Tippy>
-      <Tippy
-        tag="a"
-        href=""
-        class="intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-1 text-white ml-2"
-        content="Reservar"
+      </router-link>
+      <router-link
+        to=""
+        class="intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-12 text-white ml-2"
       >
         <CalendarIcon class="w-3 h-3" />
-      </Tippy>
+      </router-link>
     </div>
     <!-- END: buttons -->
   </div>
