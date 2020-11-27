@@ -7,11 +7,12 @@
     </div>
     <div class="intro-y flex flex-col sm:flex-row items-center mt-8 mb-8">
       <div class="w-full sm:w-auto flex mt-3 sm:mt-0">
-        <button
-          class="button text-white bg-theme-9 shadow-md mr-2 flex items-center"
+        <router-link
+          class="button flex w-full sm:w-auto mt-2 sm:mt-0 sm:ml-1 bg-theme-9 text-white"
+          to="/amenity-edit"
         >
           <PlusSquareIcon class="w-4 h-4 mr-2" />Nueva
-        </button>
+        </router-link>
       </div>
     </div>
     <div class="intro-y grid grid-cols-12 gap-6 mt-5">

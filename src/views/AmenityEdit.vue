@@ -245,6 +245,26 @@
         <!-- END: Multiple File Upload -->
       </div>
     </div>
+    <!-- BEGIN: Document title -->
+    <div class="intro-y flex flex-col sm:flex-row mt-8">
+      <a type="button" class="button w-full sm:w-auto bg-theme-9 text-white">
+        Actualizar
+      </a>
+      <!-- <a
+        type="button"
+        class="button w-full sm:w-auto mt-2 sm:mt-0 sm:ml-1 bg-theme-6 text-white"
+        href="/reservation-amenities"
+      >
+        Cancelar
+      </a> -->
+      <router-link
+        class="button w-full sm:w-auto mt-2 sm:mt-0 sm:ml-1 bg-theme-6 text-white"
+        to="/list-amenities"
+      >
+        cancelar
+      </router-link>
+    </div>
+    <!-- END: Document title -->
   </div>
 </template>
 <script>
@@ -291,7 +311,7 @@ export default {
           LinkPlugin
         ],
         toolbar: {
-          items: ["bold", "italic", "underline", "link"]
+          items: ["bold", "italic", "underline"]
         }
       },
       dropzoneMultipleOptions: {

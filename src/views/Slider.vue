@@ -922,7 +922,7 @@
                 css-ease="linear"
                 class="mx-6 mb-8"
               >
-                <div class="h-64 px-2">
+                <div class="h-128 px-2">
                   <div class="h-full image-fit rounded-md overflow-hidden">
                     <img
                       alt="Midone Tailwind HTML Admin Template"
@@ -930,7 +930,7 @@
                     />
                   </div>
                 </div>
-                <div class="h-64 px-2">
+                <div class="h-128 px-2">
                   <div class="h-full image-fit rounded-md overflow-hidden">
                     <img
                       alt="Midone Tailwind HTML Admin Template"
@@ -938,7 +938,7 @@
                     />
                   </div>
                 </div>
-                <div class="h-64 px-2">
+                <div class="h-128 px-2">
                   <div class="h-full image-fit rounded-md overflow-hidden">
                     <img
                       alt="Midone Tailwind HTML Admin Template"
@@ -955,7 +955,7 @@
               >
                 <FileIcon class="w-4 h-4 mr-2" /> Copy example code
               </button>
-              <div class="overflow-y-auto h-64 mt-3">
+              <div class="overflow-y-auto h-128 mt-3">
                 <Highlight
                   id="copy-fade-animation-slider"
                   class="source-preview"
@@ -973,7 +973,7 @@
                         css-ease="linear"
                         class="mx-6 mb-8"
                       >
-                        <div class="h-64 px-2">
+                        <div class="h-128 px-2">
                           <div
                             class="h-full image-fit rounded-md overflow-hidden"
                           >
@@ -985,7 +985,7 @@
                             />
                           </div>
                         </div>
-                        <div class="h-64 px-2">
+                        <div class="h-128 px-2">
                           <div
                             class="h-full image-fit rounded-md overflow-hidden"
                           >
@@ -997,7 +997,7 @@
                             />
                           </div>
                         </div>
-                        <div class="h-64 px-2">
+                        <div class="h-128 px-2">
                           <div
                             class="h-full image-fit rounded-md overflow-hidden"
                           >

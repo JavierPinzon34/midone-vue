@@ -9,6 +9,7 @@
       <v-calendar
         class="custom-calendar max-w-full"
         :masks="masks"
+        locale="Es"
         :attributes="attributes"
         disable-page-swipe
         is-expanded

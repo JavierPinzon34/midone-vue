@@ -10,6 +10,11 @@ import ReservationAmenities from "../views/ReservationAmenities";
 import ReservationAmenitiesEdit from "../views/ReservationAmenitiesEdit";
 import ListAmenities from "../views/ListAmenities";
 import AmenityEdit from "../views/AmenityEdit";
+import CardAmenityDetails from "../views/CardAmenityDetails";
+import NewAmenityReserve from "../views/NewAmenityReserve";
+import BuildingConfiguration from "../views/BuildingConfiguration";
+import ListProperties from "../views/ListProperties";
+import CommonAreas from "../views/CommonAreas";
 import Login from "../views/Login";
 import Register from "../views/Register";
 import ErrorPage from "../views/ErrorPage";
@@ -52,14 +57,39 @@ const routes = [
         component: ReservationAmenitiesEdit
       },
       {
+        path: "list-amenities",
+        name: "side-menu-lista-amenidades",
+        component: ListAmenities
+      },
+      {
         path: "amenity-edit",
         name: "side-menu-amenidades-edicion",
         component: AmenityEdit
       },
       {
-        path: "list-amenities",
-        name: "side-menu-lista-amenidades",
-        component: ListAmenities
+        path: "amenity-details",
+        name: "side-menu-amenidades-detalles",
+        component: CardAmenityDetails
+      },
+      {
+        path: "new-amenity-reserve",
+        name: "side-menu-new-amenity-reserve",
+        component: NewAmenityReserve
+      },
+      {
+        path: "building-configuration",
+        name: "side-menu-configuracion-edificio",
+        component: BuildingConfiguration
+      },
+      {
+        path: "list-properties",
+        name: "side-menu-lista-inmuebles",
+        component: ListProperties
+      },
+      {
+        path: "common-areas",
+        name: "side-menu-lista-areas-comunes",
+        component: CommonAreas
       },
       {
         path: "inbox",

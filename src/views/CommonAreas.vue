@@ -2,9 +2,18 @@
   <div>
     <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
       <h2 class="text-2xl font-medium mr-auto border-b-2">
-        Reserva Amenidades
+        Lista de áreas comunes
       </h2>
     </div>
+    <!-- BEGIN: HTML Date and buttons -->
+    <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
+      <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
+        <button class="button text-white bg-theme-9 shadow-md mr-2">
+          Nueva
+        </button>
+      </div>
+    </div>
+    <!-- END: HTML Date and buttons -->
     <!-- BEGIN: HTML Table Data -->
     <div class="intro-y box p-5 mt-5">
       <div class="overflow-x-auto scrollbar-hidden">
@@ -27,6 +36,7 @@ import Tabulator from "tabulator-tables";
 export default {
   data() {
     return {
+      date: "",
       table: null,
       filter: {
         field: "name",
@@ -48,7 +58,7 @@ export default {
       paginationSizeSelector: [10, 20, 30, 40],
       layout: "fitColumns",
       responsiveLayout: "collapse",
-      placeholder: "No matching records found",
+      placeholder: "Sin resultados",
       columns: [
         {
           formatter: "responsiveCollapse",
@@ -132,9 +142,31 @@ export default {
           }
         },
         {
-          title: "acciones",
-          minWidth: 200,
-          field: "actions",
+          title: "Eliminar",
+          minWidth: 100,
+          field: "actionsd",
+          responsive: 1,
+          hozAlign: "center",
+          vertAlign: "middle",
+          print: false,
+          download: false,
+          cellClick: function() {
+            console.log("click");
+            // me.editar();
+            me.$router.push({ path: "/reservation-amenities-edit" });
+          },
+          formatter() {
+            return `<div class="flex lg:justify-center items-center">
+              <a class="flex items-center mr-3">
+                <i data-feather="trash-2" class="w-4 h-4 mr-1"></i> Eliminar
+              </a>              
+            </div>`;
+          }
+        },
+        {
+          title: "Editar",
+          minWidth: 100,
+          field: "actionse",
           responsive: 1,
           hozAlign: "center",
           vertAlign: "middle",
