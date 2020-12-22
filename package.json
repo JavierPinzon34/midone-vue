@@ -26,6 +26,7 @@
     "@ckeditor/ckeditor5-vue": "^1.0.1",
     "@google/markerclusterer": "^2.0.8",
     "@popperjs/core": "^2.4.4",
+    "axios": "^0.21.1",
     "cash-dom": "^8.0.0",
     "chart.js": "^2.9.3",
     "core-js": "^3.6.5",
@@ -44,6 +45,7 @@
     "toastify-js": "^1.9.0",
     "velocity-animate": "^1.5.2",
     "vue": "^2.6.11",
+    "vue-axios": "^3.2.0",
     "vue-chartjs": "^3.5.0",
     "vue-feather-icons": "^5.1.0",
     "vue-router": "^3.2.0",
@@ -85,7 +87,15 @@
     "parserOptions": {
       "parser": "babel-eslint"
     },
-    "rules": {}
+    "rules": {
+      "prettier/prettier":[
+        "error",
+        {
+          "tabWidth"  : 4,
+          "semi" : false
+        }
+      ]
+    }
   },
   "browserslist": [
     "> 1%",

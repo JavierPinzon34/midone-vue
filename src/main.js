@@ -5,9 +5,11 @@ import store from "./store";
 import "./global-components";
 import "./utils";
 import "./libs";
+import axios from 'axios';
+import VueAxios from 'vue-axios';
 import VCalendar from "v-calendar";
 Vue.use(VCalendar);
-
+Vue.use(VueAxios, axios)
 // Midone Theme
 import "./assets/sass/app.scss";
 

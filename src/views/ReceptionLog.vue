@@ -2,7 +2,7 @@
   <div>
     <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
       <h2 class="text-2xl font-medium mr-auto border-b-2">
-        Bitacora Recepción
+        Bitacora Recepción {{ tesr }}
       </h2>
     </div>
     <!-- BEGIN: HTML Date and buttons -->
@@ -86,12 +86,14 @@
 import xlsx from "xlsx";
 import feather from "feather-icons";
 import Tabulator from "tabulator-tables";
+import userService from "../services/userService";
 
 export default {
   data() {
     return {
       date: "",
       table: null,
+      tesr: null,
       filter: {
         field: "name",
         type: "like",
@@ -100,6 +102,7 @@ export default {
     };
   },
   mounted() {
+    this.get_user();
     let me = this;
     me.table = new Tabulator(me.$refs.table, {
       ajaxURL: "https://dummy-data.left4code.com",
@@ -213,7 +216,7 @@ export default {
             return `<div class="flex lg:justify-center items-center">
               <a class="flex items-center mr-3">
                 <i data-feather="check-square" class="w-4 h-4 mr-1"></i> Editar
-              </a>              
+              </a>
             </div>`;
           }
         },
@@ -297,6 +300,10 @@ export default {
     });
   },
   methods: {
+    async get_user() {
+      let user = await userService.get_payment();
+      this.tesr = user;
+    },
     editar() {
       this.$router.push({ path: "/reservation-calendar" });
     },
