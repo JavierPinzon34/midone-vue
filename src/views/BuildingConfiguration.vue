@@ -10,6 +10,7 @@
       <div
         class="wizard flex flex-col lg:flex-row justify-center px-5 sm:px-20"
       >
+        <!-- BEGIN: Layout 1 -->
         <div
           class="intro-x lg:text-center flex items-center lg:block flex-1 z-10 option-one"
           :class="{ 'is-active': option == 1 }"
@@ -26,6 +27,8 @@
             Información
           </div>
         </div>
+        <!-- END: Layout 1 -->
+        <!-- BEGIN: Layout 2 -->
         <div
           class="intro-x lg:text-center flex items-center mt-5 lg:mt-0 lg:block flex-1 z-10 option-two"
           :class="{ 'is-active': option == 2 }"
@@ -42,6 +45,8 @@
             Propiedades
           </div>
         </div>
+        <!-- END: Layout 2 -->
+        <!-- BEGIN: Layout 3 -->
         <div
           class="intro-x lg:text-center flex items-center mt-5 lg:mt-0 lg:block flex-1 z-10 option-three"
           :class="{ 'is-active': option == 3 }"
@@ -58,6 +63,8 @@
             Parqueaderos
           </div>
         </div>
+        <!-- END: Layout 3 -->
+        <!-- BEGIN: Layout 4 -->
         <div
           class="intro-x lg:text-center flex items-center mt-5 lg:mt-0 lg:block flex-1 z-10 option-four"
           :class="{ 'is-active': option == 4 }"
@@ -74,6 +81,8 @@
             Depositos
           </div>
         </div>
+        <!-- END: Layout 4 -->
+        <!-- BEGIN: Layout 5 -->
         <div
           class="intro-x lg:text-center flex items-center mt-5 lg:mt-0 lg:block flex-1 z-10 option-five"
           :class="{ 'is-active': option == 5 }"
@@ -90,10 +99,12 @@
             Reglas
           </div>
         </div>
+        <!-- END: Layout 5 -->
         <div
           class="wizard__line hidden lg:block w-2/3 bg-gray-200 dark:bg-dark-1 absolute mt-5"
         ></div>
       </div>
+      <!-- BEGIN: Option 1 -->
       <div
         v-if="option == 1"
         class="px-5 sm:px-20 mt-10 pt-10 border-t border-gray-200 dark:border-dark-5"
@@ -177,11 +188,14 @@
           </div>
         </div>
       </div>
+      <!-- END: Option 1 -->
+      <!-- BEGIN: Option 2 -->
       <div
         v-if="option == 2"
         class="px-5 sm:px-20 mt-10 pt-10 border-t border-gray-200 dark:border-dark-5"
       >
-        <div>
+        <!-- WITH INFORMATION -->
+        <div v-if="layout_2">
           <div class="preview">
             <div class="overflow-x-auto">
               <table class="table">
@@ -246,31 +260,196 @@
               Restaurar
             </button>
           </div>
+        </div>
+        <!-- WITHOUT INFORMATION -->
+        <div v-else>
+          <div class="grid grid-cols-12 gap-4 row-gap-5 mt-5">
+            <div class="intro-y col-span-12 sm:col-span-6 md:col-span-3">
+              <div class="mb-2">Pisos:</div>
+              <input
+                v-model="form.propiety_floors"
+                type="text"
+                class="input w-full border flex-1"
+              />
+            </div>
+            <div class="intro-y col-span-12 sm:col-span-6 md:col-span-3">
+              <div class="mb-2">¿Tiene sótano?:</div>
+              <div class="flex flex-col sm:flex-row sm:mt-4">
+                <div
+                  class="flex items-center text-gray-700 dark:text-gray-500 mr-2"
+                >
+                  <input
+                    id="basement-radio-yes"
+                    v-model="form.basement_radio"
+                    type="radio"
+                    class="input border mr-2"
+                    name="basement_radio_button"
+                    value="si"
+                  />
+                  <label
+                    class="cursor-pointer select-none"
+                    for="basement-radio-yes"
+                    >Si
+                  </label>
+                </div>
+                <div
+                  class="flex items-center text-gray-700 dark:text-gray-500 mr-2 mt-2 sm:mt-0"
+                >
+                  <input
+                    id="basement-radio-no"
+                    v-model="form.basement_radio"
+                    type="radio"
+                    class="input border mr-2"
+                    name="basement_radio_button"
+                    value="no"
+                  />
+                  <label
+                    class="cursor-pointer select-none"
+                    for="basement-radio-no"
+                    >No
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="intro-y col-span-12 sm:col-span-6 md:col-span-3">
+              <div class="mb-2">¿Tiene Azotea?:</div>
+              <div class="flex flex-col sm:flex-row sm:mt-4">
+                <div
+                  class="flex items-center text-gray-700 dark:text-gray-500 mr-2"
+                >
+                  <input
+                    id="rooftop-radio-yes"
+                    v-model="form.rooftop_radio"
+                    type="radio"
+                    class="input border mr-2"
+                    name="rooftop_radio_button"
+                    value="si"
+                  />
+                  <label
+                    class="cursor-pointer select-none"
+                    for="rooftop-radio-yes"
+                    >Si
+                  </label>
+                </div>
+                <div
+                  class="flex items-center text-gray-700 dark:text-gray-500 mr-2 mt-2 sm:mt-0"
+                >
+                  <input
+                    id="rooftop-radio-no"
+                    v-model="form.rooftop_radio"
+                    type="radio"
+                    class="input border mr-2"
+                    name="rooftop_radio_button"
+                    value="no"
+                  />
+                  <label
+                    class="cursor-pointer select-none"
+                    for="rooftop-radio-no"
+                    >No
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="intro-y col-span-12 sm:col-span-6 md:col-span-3">
+              <div class="mb-2">Piso inicial:</div>
+              <input
+                v-model="form.initial_floor"
+                type="text"
+                class="input w-full border flex-1"
+              />
+            </div>
+            <div class="intro-y col-span-12 sm:col-span-6 md:col-span-3">
+              <div class="mb-2">Piso Final:</div>
+              <input
+                v-model="form.final_floor"
+                type="text"
+                class="input w-full border flex-1"
+              />
+            </div>
+            <div class="intro-y col-span-12 sm:col-span-6">
+              <div class="mb-2">
+                ¿Los pisos tienen el mismo número de inmuebles?:
+              </div>
+              <div class="flex flex-col sm:flex-row sm:mt-4">
+                <div
+                  class="flex items-center text-gray-700 dark:text-gray-500 mr-2"
+                >
+                  <input
+                    id="mni-yes"
+                    v-model="form.mni_radio"
+                    type="radio"
+                    class="input border mr-2"
+                    name="mni_radio_button"
+                    value="si"
+                  />
+                  <label class="cursor-pointer select-none" for="mni-yes">
+                    Si
+                  </label>
+                </div>
+                <div
+                  class="flex items-center text-gray-700 dark:text-gray-500 mr-2 mt-2 sm:mt-0"
+                >
+                  <input
+                    id="mni-no"
+                    v-model="form.mni_radio"
+                    type="radio"
+                    class="input border mr-2"
+                    name="mni_radio_button"
+                    value="no"
+                  />
+                  <label class="cursor-pointer select-none" for="mni-no">
+                    No
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="intro-y col-span-12 sm:col-span-6 md:col-span-3">
+              <div class="mb-2">Número de inmuebles por piso:</div>
+              <input
+                v-model="form.number_of_properties"
+                type="text"
+                class="input w-full border flex-1"
+              />
+            </div>
+          </div>
           <div
-            class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-8"
+            class="intro-y col-span-12 flex items-center justify-center sm:justify-start mt-8"
           >
             <button
               v-if="option != 1"
-              class="button w-24 justify-center block bg-gray-200 text-gray-600 dark:bg-dark-1 dark:text-gray-300"
-              @click="previousOption()"
+              class="button w-24 justify-center block bg-theme-3 text-white"
             >
-              Anterior
-            </button>
-            <button
-              v-if="option != 5"
-              class="button w-24 justify-center block bg-theme-1 text-white ml-2"
-              @click="nextOption()"
-            >
-              Siguiente
+              Guardar
             </button>
           </div>
         </div>
+        <div
+          class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-8"
+        >
+          <button
+            v-if="option != 1"
+            class="button w-24 justify-center block bg-gray-200 text-gray-600 dark:bg-dark-1 dark:text-gray-300"
+            @click="previousOption()"
+          >
+            Anterior
+          </button>
+          <button
+            v-if="option != 5"
+            class="button w-24 justify-center block bg-theme-1 text-white ml-2"
+            @click="nextOption()"
+          >
+            Siguiente
+          </button>
+        </div>
       </div>
+      <!-- END: Option 2 -->
+      <!-- BEGIN: Option 3 -->
       <div
         v-if="option == 3"
         class="px-5 sm:px-20 mt-10 pt-10 border-t border-gray-200 dark:border-dark-5"
       >
-        <div>
+        <!-- WITH INFORMATION -->
+        <div v-if="layout_3">
           <div
             class="intro-y col-span-12 flex items-center justify-center sm:justify-start mb-4"
           >
@@ -371,7 +550,7 @@
                       {{ form.parking_name }}
                     </td>
                     <td class="border-b whitespace-no-wrap">
-                      {{ form.parking_post }}
+                      {{ form.parking_positions }}
                     </td>
                     <td class="border-b whitespace-no-wrap">
                       <router-link
@@ -386,31 +565,81 @@
               </table>
             </div>
           </div>
+        </div>
+        <!-- WITHOUT INFORMATION -->
+        <div v-else>
+          <div class="grid grid-cols-12 gap-4 row-gap-5 mt-5">
+            <div class="intro-y col-span-12 sm:col-span-6 md:col-span-3">
+              <div class="mb-2">Nombre:</div>
+              <input
+                v-model="form.parking_name"
+                type="text"
+                class="input w-full border flex-1"
+              />
+            </div>
+            <div class="intro-y col-span-12 sm:col-span-6 md:col-span-3">
+              <div class="mb-2">Puestos:</div>
+              <input
+                v-model="form.parking_positions"
+                type="text"
+                class="input w-full border flex-1"
+              />
+            </div>
+            <div class="intro-y col-span-12 sm:col-span-6 md:col-span-3">
+              <div class="mb-2">Pisos:</div>
+              <div>
+                <TailSelect
+                  v-model="form.parking_floors"
+                  :options="{
+                    search: true,
+                    classNames: 'w-full'
+                  }"
+                >
+                  <option value="null">Seleccione una opción</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                </TailSelect>
+              </div>
+            </div>
+          </div>
           <div
-            class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-8"
+            class="intro-y col-span-12 flex items-center justify-center sm:justify-start mt-8"
           >
             <button
               v-if="option != 1"
-              class="button w-24 justify-center block bg-gray-200 text-gray-600 dark:bg-dark-1 dark:text-gray-300"
-              @click="previousOption()"
+              class="button w-24 justify-center block bg-theme-3 text-white"
             >
-              Anterior
-            </button>
-            <button
-              v-if="option != 5"
-              class="button w-24 justify-center block bg-theme-1 text-white ml-2"
-              @click="nextOption()"
-            >
-              Siguiente
+              Guardar
             </button>
           </div>
         </div>
+        <div
+          class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-8"
+        >
+          <button
+            v-if="option != 1"
+            class="button w-24 justify-center block bg-gray-200 text-gray-600 dark:bg-dark-1 dark:text-gray-300"
+            @click="previousOption()"
+          >
+            Anterior
+          </button>
+          <button
+            v-if="option != 5"
+            class="button w-24 justify-center block bg-theme-1 text-white ml-2"
+            @click="nextOption()"
+          >
+            Siguiente
+          </button>
+        </div>
       </div>
+      <!-- END: Option 3 -->
+      <!-- BEGIN: Option 4 -->
       <div
         v-if="option == 4"
         class="px-5 sm:px-20 mt-10 pt-10 border-t border-gray-200 dark:border-dark-5"
       >
-        <div>
+        <!-- WITH INFORMATION -->
+        <div v-if="layout_4">
           <div
             class="intro-y col-span-12 flex items-center justify-center sm:justify-start mb-4"
           >
@@ -511,7 +740,7 @@
                       {{ form.deposit_name }}
                     </td>
                     <td class="border-b whitespace-no-wrap">
-                      {{ form.deposit_capacity }}
+                      {{ form.deposit_positions }}
                     </td>
                     <td class="border-b whitespace-no-wrap">
                       <router-link
@@ -526,31 +755,81 @@
               </table>
             </div>
           </div>
+        </div>
+        <!-- WITHOUT INFORMATION -->
+        <div v-else>
+          <div class="grid grid-cols-12 gap-4 row-gap-5 mt-5">
+            <div class="intro-y col-span-12 sm:col-span-6 md:col-span-3">
+              <div class="mb-2">Nombre:</div>
+              <input
+                v-model="form.deposit_name"
+                type="text"
+                class="input w-full border flex-1"
+              />
+            </div>
+            <div class="intro-y col-span-12 sm:col-span-6 md:col-span-3">
+              <div class="mb-2">Puestos:</div>
+              <input
+                v-model="form.deposit_positions"
+                type="text"
+                class="input w-full border flex-1"
+              />
+            </div>
+            <div class="intro-y col-span-12 sm:col-span-6 md:col-span-3">
+              <div class="mb-2">Pisos:</div>
+              <div>
+                <TailSelect
+                  v-model="form.deposit_floors"
+                  :options="{
+                    search: true,
+                    classNames: 'w-full'
+                  }"
+                >
+                  <option value="null">Seleccione una opción</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                </TailSelect>
+              </div>
+            </div>
+          </div>
           <div
-            class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-8"
+            class="intro-y col-span-12 flex items-center justify-center sm:justify-start mt-8"
           >
             <button
               v-if="option != 1"
-              class="button w-24 justify-center block bg-gray-200 text-gray-600 dark:bg-dark-1 dark:text-gray-300"
-              @click="previousOption()"
+              class="button w-24 justify-center block bg-theme-3 text-white"
             >
-              Anterior
-            </button>
-            <button
-              v-if="option != 5"
-              class="button w-24 justify-center block bg-theme-1 text-white ml-2"
-              @click="nextOption()"
-            >
-              Siguiente
+              Guardar
             </button>
           </div>
         </div>
+        <div
+          class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-8"
+        >
+          <button
+            v-if="option != 1"
+            class="button w-24 justify-center block bg-gray-200 text-gray-600 dark:bg-dark-1 dark:text-gray-300"
+            @click="previousOption()"
+          >
+            Anterior
+          </button>
+          <button
+            v-if="option != 5"
+            class="button w-24 justify-center block bg-theme-1 text-white ml-2"
+            @click="nextOption()"
+          >
+            Siguiente
+          </button>
+        </div>
       </div>
+      <!-- END: Option 4 -->
+      <!-- BEGIN: Option 5 -->
       <div
         v-if="option == 5"
         class="px-5 sm:px-20 mt-10 pt-10 border-t border-gray-200 dark:border-dark-5"
       >
-        <div class="grid grid-cols-12 gap-4 row-gap-5 mt-5">
+        <!-- WITH INFORMATION -->
+        <div v-if="layout_5" class="grid grid-cols-12 gap-4 row-gap-5 mt-5">
           <div class="intro-y col-span-12 sm:col-span-4">
             <div class="mb-2">Capacidad 1 Habitación:</div>
             <input
@@ -614,26 +893,112 @@
               <option>50</option>
             </select>
           </div> -->
+        </div>
+        <!-- WITHOUT INFORMATION -->
+        <div v-else>
+          <div class="grid grid-cols-12 gap-4 row-gap-5 mt-5">
+            <div class="intro-y col-span-12 sm:col-span-6 md:col-span-3">
+              <div class="mb-2">1 Capacidad por propiedad:</div>
+              <div class="mb-2">
+                <span class="font-extrabold">
+                  Digite el mayor numero de habitaciones en una propiedad
+                </span>
+              </div>
+              <input
+                v-model="form.deposit_name"
+                type="number"
+                class="input w-full border flex-1"
+              />
+            </div>
+            <div class="intro-y col-span-12 sm:col-span-6 md:col-span-3">
+              <div class="mb-2">2 Valor registro:</div>
+              <div class="mb-2">
+                <span class="font-extrabold">
+                  Digite el valor del registro por persona
+                </span>
+              </div>
+              <input
+                v-model="form.deposit_positions"
+                type="text"
+                class="input w-full border flex-1"
+              />
+            </div>
+            <div class="intro-y col-span-12 sm:col-span-6 md:col-span-3">
+              <div class="mb-2">3 Reserva recepción:</div>
+              <div class="mb-2">
+                <span class="font-extrabold">
+                  Se permite hacer reservas en recepción?
+                </span>
+              </div>
+              <div>
+                <TailSelect
+                  v-model="form.deposit_floors"
+                  :options="{
+                    search: true,
+                    classNames: 'w-full'
+                  }"
+                >
+                  <option value="null">Seleccione una opción</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                </TailSelect>
+              </div>
+            </div>
+            <div class="intro-y col-span-12 sm:col-span-6 md:col-span-3">
+              <div class="mb-2">4 Edad niño paga:</div>
+              <div class="mb-2">
+                <span class="font-extrabold">
+                  Digite la edad a la que el niño paga registro
+                </span>
+              </div>
+              <input
+                v-model="form.deposit_name"
+                type="number"
+                class="input w-full border flex-1"
+              />
+            </div>
+          </div>
           <div
-            class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-5"
+            class="intro-y col-span-12 flex items-center justify-center sm:justify-start mt-6"
           >
             <button
               v-if="option != 1"
-              class="button w-24 justify-center block bg-gray-200 text-gray-600 dark:bg-dark-1 dark:text-gray-300"
-              @click="previousOption()"
+              class="button w-auto justify-center block bg-gray-200 text-gray-600 dark:bg-dark-1 dark:text-gray-300"
             >
-              Anterior
+              Generar habitaciones
             </button>
+          </div>
+          <div
+            class="intro-y col-span-12 flex items-center justify-center sm:justify-start mt-8"
+          >
             <button
-              v-if="option != 5"
-              class="button w-24 justify-center block bg-theme-1 text-white ml-2"
-              @click="nextOption()"
+              v-if="option != 1"
+              class="button w-24 justify-center block bg-theme-3 text-white"
             >
-              Siguiente
+              Guardar
             </button>
           </div>
         </div>
+        <div
+          class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-5"
+        >
+          <button
+            v-if="option != 1"
+            class="button w-24 justify-center block bg-gray-200 text-gray-600 dark:bg-dark-1 dark:text-gray-300"
+            @click="previousOption()"
+          >
+            Anterior
+          </button>
+          <button
+            v-if="option != 5"
+            class="button w-24 justify-center block bg-theme-1 text-white ml-2"
+            @click="nextOption()"
+          >
+            Siguiente
+          </button>
+        </div>
       </div>
+      <!-- END: Option 1 -->
     </div>
     <!-- END: Wizard Layout -->
   </div>
@@ -644,7 +1009,20 @@ export default {
   data() {
     return {
       option: 1,
+      layout_2: false,
+      layout_3: false,
+      layout_4: false,
+      layout_5: false,
       form: {
+        mni_radio: "",
+        basement_radio: "",
+        rooftop_radio: "",
+        number_of_properties: "",
+        parking_floors: "",
+        parking_name: "",
+        parking_positions: "",
+        initial_floor: "",
+        final_floor: "",
         building_name: "Edificio Prueba Convocatoria",
         company_name: "Convocatoria Gobernacion",
         nit: "901001001-1",
@@ -655,10 +1033,8 @@ export default {
         rooftop: "Si",
         start_property: "Piso 1",
         end_property: "Piso 2",
-        parking_name: "Parqueaderos",
-        parking_post: 7,
-        deposit_name: "Depositos",
-        deposit_capacity: 7,
+        deposit_name: "",
+        deposit_positions: "",
         room1: 4,
         room2: 6,
         room3: 8,

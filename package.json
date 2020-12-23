@@ -88,11 +88,11 @@
       "parser": "babel-eslint"
     },
     "rules": {
-      "prettier/prettier":[
+      "prettier/prettier": [
         "error",
         {
-          "tabWidth"  : 4,
-          "semi" : false
+          "tabWidth": 4,
+          "semi": false
         }
       ]
     }
