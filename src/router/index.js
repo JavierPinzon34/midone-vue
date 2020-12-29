@@ -15,6 +15,8 @@ import NewAmenityReserve from "../views/NewAmenityReserve";
 import BuildingConfiguration from "../views/BuildingConfiguration";
 import ListProperties from "../views/ListProperties";
 import CommonAreas from "../views/CommonAreas";
+import OwnerReservations from "../views/OwnerReservations";
+import ReservoirGenerator from "../views/ReservoirGenerator";
 import Login from "../views/Login";
 import Register from "../views/Register";
 import ErrorPage from "../views/ErrorPage";
@@ -90,6 +92,16 @@ const routes = [
         path: "common-areas",
         name: "side-menu-lista-areas-comunes",
         component: CommonAreas
+      },
+      {
+        path: "owner-reservations",
+        name: "side-menu-owner-reservations",
+        component: OwnerReservations
+      },
+      {
+        path: "reservoir-generator",
+        name: "side-menu-reservoir-generator",
+        component: ReservoirGenerator
       },
       {
         path: "inbox",

@@ -2,7 +2,7 @@
   <div class="item-property">
     <div
       v-if="items.type == 1 || items.type == 3"
-      class="h-48 text-white bg-green-500 p-3 rounded"
+      class="h-48 text-white bg-green-500 p-3 rounded relative"
     >
       <div class="mb-2">
         <span class="text-3xl font-bold">{{ items.text }}</span>
@@ -23,6 +23,12 @@
       </router-link>
       <div class="mt-2">
         <span>{{ items.propietary }}</span>
+      </div>
+      <div
+        v-if="items.foot == 1"
+        class="absolute bottom-0 left-0 w-full text-center bg-green-600 rounded"
+      >
+        <router-link to="/reservoir-generator">Generar RGT Huesped</router-link>
       </div>
     </div>
     <div v-if="items.type == 2" class="h-48 text-white bg-blue-500 rounded">

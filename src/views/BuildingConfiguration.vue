@@ -905,7 +905,7 @@
                 </span>
               </div>
               <input
-                v-model="form.deposit_name"
+                v-model="rules.rooms"
                 type="number"
                 class="input w-full border flex-1"
               />
@@ -918,7 +918,7 @@
                 </span>
               </div>
               <input
-                v-model="form.deposit_positions"
+                v-model="rules.value"
                 type="text"
                 class="input w-full border flex-1"
               />
@@ -932,7 +932,7 @@
               </div>
               <div>
                 <TailSelect
-                  v-model="form.deposit_floors"
+                  v-model="rules.reservation"
                   :options="{
                     search: true,
                     classNames: 'w-full'
@@ -952,7 +952,7 @@
                 </span>
               </div>
               <input
-                v-model="form.deposit_name"
+                v-model="rules.age_child"
                 type="number"
                 class="input w-full border flex-1"
               />
@@ -964,9 +964,26 @@
             <button
               v-if="option != 1"
               class="button w-auto justify-center block bg-gray-200 text-gray-600 dark:bg-dark-1 dark:text-gray-300"
+              @click="generateRooms"
             >
               Generar habitaciones
             </button>
+          </div>
+          <div v-if="generate_room > 0">
+            <div class="grid grid-cols-12 gap-4 row-gap-5 mt-5">
+              <div
+                v-for="n in generate_room"
+                :key="n"
+                class="intro-y col-span-12 sm:col-span-4 lg:col-span-2"
+              >
+                <div class="mb-2">Habitación {{ n }}</div>
+                <input
+                  v-model="roomDetail[n - 1]"
+                  type="number"
+                  class="input w-full border flex-1"
+                />
+              </div>
+            </div>
           </div>
           <div
             class="intro-y col-span-12 flex items-center justify-center sm:justify-start mt-8"
@@ -1008,6 +1025,7 @@
 export default {
   data() {
     return {
+      generate_room: 0,
       option: 1,
       layout_2: false,
       layout_3: false,
@@ -1042,6 +1060,12 @@ export default {
         book_at_reception: "No",
         age_child: 5
       },
+      rules: {
+        rooms: "",
+        value: "",
+        reservation: "",
+        age_child: ""
+      },
       newParking: {
         name: "",
         post: 0,
@@ -1051,7 +1075,8 @@ export default {
         name: "",
         post: 0,
         floor: "null"
-      }
+      },
+      roomDetail: []
     };
   },
   methods: {
@@ -1073,6 +1098,17 @@ export default {
     },
     hideModalDeposit() {
       cash("#medium-modal-deposit").modal("hide");
+    },
+    generateRooms() {
+      let me = this;
+      me.roomDetail = [];
+      me.generate_room = parseInt(me.rules.rooms);
+      for (let index = 0; index < me.generate_room; index++) {
+        me.roomDetail.push(0);
+      }
+      /* me.generate_room.forEach(ro => {
+        me.roomDetail.push(ro);
+      }); */
     }
   }
 };
