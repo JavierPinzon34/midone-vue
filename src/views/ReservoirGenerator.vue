@@ -123,7 +123,7 @@
       <!-- END: Select date -->
       <!-- BEGIN: Select pax -->
       <div class="w-full col-span-1">
-        <div class="mb-2">Pax:</div>
+        <div class="font-medium text-lg">Pax:</div>
         <input
           v-model="form.pax"
           type="text"
@@ -149,31 +149,67 @@
         </h2>
       </div>
       <div>
-        <router-link
+        <a
           class="button w-full sm:w-auto mt-2 sm:mt-0 sm:ml-1 bg-theme-6 text-white"
-          to="/reservation-amenities"
+          @click="clear_form()"
         >
           Eliminar Formulario
-        </router-link>
-        <router-link
+        </a>
+        <a
           class="button w-full sm:w-auto mt-2 sm:mt-0 sm:ml-1 bg-gray-400 text-black"
-          to="/reservation-amenities"
+          @click="generate_car()"
         >
           Registrar Vehiculo
-        </router-link>
+        </a>
       </div>
       <div
         v-for="n in generate_guest"
         :key="n"
-        class="border-t border-gray-400 dark:border-dark-5 mt-5"
+        class="border-t border-gray-500 dark:border-dark-5 mt-5 mb-10"
       >
-        <div class="grid grid-cols-12 gap-4 row-gap-5 mt-2">
+        <div class="grid grid-cols-12 gap-4 row-gap-5 mt-5">
+          <div class="mt-2 col-span-12 text-xl font-medium">
+            Huésped {{ n }}:
+          </div>
+          <div
+            v-if="n == 1 && car == 1"
+            class="intro-y col-span-12 sm:col-span-6 md:col-span-3"
+          >
+            <div class="mb-2">Placa:</div>
+            <input
+              v-model="guest_information[n - 1].plate"
+              type="text"
+              class="input w-full border flex-1 z-0"
+            />
+          </div>
+          <div
+            v-if="n == 1 && car == 1"
+            class="intro-y col-span-12 sm:col-span-6 md:col-span-3"
+          >
+            <div class="mb-2">Modelo:</div>
+            <input
+              v-model="guest_information[n - 1].model"
+              type="text"
+              class="input w-full border flex-1 z-0"
+            />
+          </div>
+          <div
+            v-if="n == 1 && car == 1"
+            class="intro-y col-span-12 sm:col-span-6 md:col-span-3"
+          >
+            <div class="mb-2">Color:</div>
+            <input
+              v-model="guest_information[n - 1].color"
+              type="text"
+              class="input w-full border flex-1 z-0"
+            />
+          </div>
           <div class="intro-y col-span-12 sm:col-span-6 md:col-span-3">
             <div class="mb-2">Nombre:</div>
             <input
               v-model="guest_information[n - 1].name"
               type="text"
-              class="input w-full border flex-1"
+              class="input w-full border flex-1 z-0"
             />
           </div>
           <div class="intro-y col-span-12 sm:col-span-6 md:col-span-3">
@@ -181,24 +217,16 @@
             <input
               v-model="guest_information[n - 1].lastname"
               type="text"
-              class="input w-full border flex-1"
+              class="input w-full border flex-1 z-0"
             />
           </div>
           <div class="intro-y col-span-12 sm:col-span-6 md:col-span-3">
             <div class="mb-2">Tipo de Documento:</div>
-            <input
-              v-model="guest_information[n - 1].type_identification"
-              type="text"
-              class="input w-full border flex-1"
-            />
-          </div>
-          <div class="intro-y col-span-12 sm:col-span-6 md:col-span-3">
-            <div class="mb-2">Identificación:</div>
             <TailSelect
-              v-model="guest_information[n - 1].identification"
+              v-model="guest_information[n - 1].type_identification"
               :options="{
-                search: true,
-                classNames: 'w-full'
+                search: false,
+                classNames: 'w-full z-10'
               }"
             >
               <option value="null">Seleccione una opción</option>
@@ -208,6 +236,14 @@
               <option value="4">Pasaported</option>
               <option value="5">Nit</option>
             </TailSelect>
+          </div>
+          <div class="intro-y col-span-12 sm:col-span-6 md:col-span-3">
+            <div class="mb-2">Identificación:</div>
+            <input
+              v-model="guest_information[n - 1].identification"
+              type="text"
+              class="input w-full border flex-1 z-0"
+            />
           </div>
           <div class="intro-y col-span-12 sm:col-span-6 md:col-span-3">
             <div class="mb-2">Fecha de Nacimiento:</div>
@@ -228,53 +264,65 @@
               class="input w-full border block mr-auto"
             />
           </div>
-          <div class="intro-y col-span-12 sm:col-span-6 md:col-span-3">
+          <div
+            v-if="n == 1"
+            class="intro-y col-span-12 sm:col-span-6 md:col-span-3"
+          >
             <div class="mb-2">E-mail:</div>
             <input
               v-model="guest_information[n - 1].mail"
               type="text"
-              class="input w-full border flex-1"
+              class="input w-full border flex-1 z-0"
             />
           </div>
-          <div class="intro-y col-span-12 sm:col-span-6 md:col-span-3">
+          <div
+            v-if="n == 1"
+            class="intro-y col-span-12 sm:col-span-6 md:col-span-3"
+          >
             <div class="mb-2">Telefono:</div>
             <input
               v-model="guest_information[n - 1].phone"
               type="text"
-              class="input w-full border flex-1"
+              class="input w-full border flex-1 z-0"
             />
           </div>
-          <div class="intro-y col-span-12 sm:col-span-6 md:col-span-3">
+          <div
+            v-if="n == 1"
+            class="intro-y col-span-12 sm:col-span-6 md:col-span-3"
+          >
             <div class="mb-2">Dirección:</div>
             <input
               v-model="guest_information[n - 1].address"
               type="text"
-              class="input w-full border flex-1"
+              class="input w-full border flex-1 z-0"
             />
           </div>
-          <div class="intro-y col-span-12 sm:col-span-6 md:col-span-3">
+          <div
+            v-if="n > 1"
+            class="intro-y col-span-12 sm:col-span-6 md:col-span-3"
+          >
             <div class="mb-2">Parentesco:</div>
             <input
               v-model="guest_information[n - 1].relationship"
               type="text"
-              class="input w-full border flex-1"
+              class="input w-full border flex-1 z-0"
             />
           </div>
         </div>
-        <div class="intro-y col-span-12 mt-4">
+        <!-- <div class="intro-y col-span-12 mt-4">
           <a
             type="button"
             class="button w-full sm:w-auto bg-theme-6 text-white"
           >
             Eliminar
           </a>
-        </div>
+        </div> -->
       </div>
     </div>
     <!-- END: Select pax -->
     <!-- BEGIN: Document title -->
     <div
-      class="intro-y flex flex-col sm:flex-row mt-5 border-t border-gray-400 dark:border-dark-5 pt-5"
+      class="intro-y flex flex-col sm:flex-row mt-5 border-t border-gray-500 dark:border-dark-5 pt-5"
     >
       <a type="button" class="button w-full sm:w-auto bg-theme-9 text-white">
         Reservar
@@ -302,6 +350,7 @@ export default {
     return {
       generate_guest: 0,
       guest_information: [],
+      car: 0,
       form: {
         type_reservation: "",
         date: "",
@@ -320,6 +369,9 @@ export default {
       me.generate_guest = parseInt(me.form.pax);
       for (let index = 0; index < me.generate_guest; index++) {
         let guest = {
+          plate: "",
+          model: "",
+          color: "",
           name: "",
           lastname: "",
           type_identification: "",
@@ -332,6 +384,14 @@ export default {
         };
         me.guest_information.push(guest);
       }
+    },
+    clear_form() {
+      let me = this;
+      me.guest_information = [];
+      me.generate_guest = 0;
+    },
+    generate_car() {
+      this.car = 1;
     }
   }
 };

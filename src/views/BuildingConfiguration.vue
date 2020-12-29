@@ -274,7 +274,10 @@
             </div>
             <div class="intro-y col-span-12 sm:col-span-6 md:col-span-3">
               <div class="mb-2">¿Tiene sótano?:</div>
-              <div class="flex flex-col sm:flex-row sm:mt-4">
+              <div
+                class="flex flex-col sm:flex-row"
+                :class="{ 'sm:mt-4': form.basement_radio != 'si' }"
+              >
                 <div
                   class="flex items-center text-gray-700 dark:text-gray-500 mr-2"
                 >
@@ -309,11 +312,25 @@
                     >No
                   </label>
                 </div>
+                <div
+                  v-if="form.basement_radio == 'si'"
+                  class="flex items-center text-gray-700 dark:text-gray-500 mr-2 mt-2 sm:mt-0"
+                >
+                  <div class="ml-2 mr-2">Pisos:</div>
+                  <input
+                    v-model="form.propiety_floors"
+                    type="text"
+                    class="input w-full border flex-1"
+                  />
+                </div>
               </div>
             </div>
             <div class="intro-y col-span-12 sm:col-span-6 md:col-span-3">
               <div class="mb-2">¿Tiene Azotea?:</div>
-              <div class="flex flex-col sm:flex-row sm:mt-4">
+              <div
+                class="flex flex-col sm:flex-row"
+                :class="{ 'sm:mt-4': form.rooftop_radio != 'si' }"
+              >
                 <div
                   class="flex items-center text-gray-700 dark:text-gray-500 mr-2"
                 >
@@ -347,6 +364,17 @@
                     for="rooftop-radio-no"
                     >No
                   </label>
+                </div>
+                <div
+                  v-if="form.rooftop_radio == 'si'"
+                  class="flex items-center text-gray-700 dark:text-gray-500 mr-2 mt-2 sm:mt-0"
+                >
+                  <div class="ml-2 mr-2">Pisos:</div>
+                  <input
+                    v-model="form.propiety_floors"
+                    type="text"
+                    class="input w-full border flex-1"
+                  />
                 </div>
               </div>
             </div>
