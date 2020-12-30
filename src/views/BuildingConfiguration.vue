@@ -424,6 +424,7 @@
                     class="input border mr-2"
                     name="mni_radio_button"
                     value="no"
+                    @input="change_mni()"
                   />
                   <label class="cursor-pointer select-none" for="mni-no">
                     No
@@ -431,8 +432,27 @@
                 </div>
               </div>
             </div>
-            <div class="intro-y col-span-12 sm:col-span-6 md:col-span-3">
+            <div
+              v-if="form.mni_radio != 'no'"
+              class="intro-y col-span-12 sm:col-span-6 md:col-span-3"
+            >
               <div class="mb-2">Número de inmuebles por piso:</div>
+              <input
+                v-model="form.number_of_properties"
+                type="text"
+                class="input w-full border flex-1"
+              />
+            </div>
+            <div
+              v-for="n in form.final_floor - form.initial_floor + 1"
+              v-else
+              :key="n"
+              class="intro-y col-span-12 sm:col-span-6 md:col-span-3"
+            >
+              <!-- <div v-if="n == 1" class="mb-2">
+                Piso {{ form.initial_floor }}:
+              </div> -->
+              <div class="mb-2">Piso {{ initial_cont + n }}:</div>
               <input
                 v-model="form.number_of_properties"
                 type="text"
@@ -1104,7 +1124,8 @@ export default {
         post: 0,
         floor: "null"
       },
-      roomDetail: []
+      roomDetail: [],
+      initial_cont: 0
     };
   },
   methods: {
@@ -1137,6 +1158,9 @@ export default {
       /* me.generate_room.forEach(ro => {
         me.roomDetail.push(ro);
       }); */
+    },
+    change_mni() {
+      this.initial_cont = parseInt(this.form.initial_floor) - 1;
     }
   }
 };

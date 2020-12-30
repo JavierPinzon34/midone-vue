@@ -17,6 +17,7 @@ import ListProperties from "../views/ListProperties";
 import CommonAreas from "../views/CommonAreas";
 import OwnerReservations from "../views/OwnerReservations";
 import ReservoirGenerator from "../views/ReservoirGenerator";
+import Documents from "../views/Documents";
 import Login from "../views/Login";
 import Register from "../views/Register";
 import ErrorPage from "../views/ErrorPage";
@@ -102,6 +103,11 @@ const routes = [
         path: "reservoir-generator",
         name: "side-menu-reservoir-generator",
         component: ReservoirGenerator
+      },
+      {
+        path: "documents",
+        name: "side-menu-reservoir-documents",
+        component: Documents
       },
       {
         path: "inbox",
