@@ -51,66 +51,144 @@
             </div> -->
             <div class="intro-x mt-8">
               <input
+                v-model="form.name"
                 type="text"
                 class="intro-x login__input input input--lg border border-gray-300 block"
+                :class="{ 'is-invalid': $v.form.name.$error }"
                 placeholder="Nombre"
               />
+              <template v-if="$v.form.name.$error">
+                <div v-if="!$v.form.name.required" class="invalid-feedback">
+                  Digite el Nombre
+                </div>
+                <div v-if="!$v.form.name.maxLength" class="invalid-feedback">
+                  Exede los 100 Caracteres
+                </div>
+              </template>
               <input
+                v-model="form.last_name"
                 type="text"
                 class="intro-x login__input input input--lg border border-gray-300 block mt-4"
+                :class="{ 'is-invalid': $v.form.last_name.$error }"
                 placeholder="Apellido"
               />
+              <template v-if="$v.form.last_name.$error">
+                <div
+                  v-if="!$v.form.last_name.required"
+                  class="invalid-feedback"
+                >
+                  Digite el Apellido
+                </div>
+                <div
+                  v-if="!$v.form.last_name.maxLength"
+                  class="invalid-feedback"
+                >
+                  Exede los 120 Caracteres
+                </div>
+              </template>
               <input
+                v-model="form.phone"
                 type="text"
                 class="intro-x login__input input input--lg border border-gray-300 block mt-4"
+                :class="{ 'is-invalid': $v.form.phone.$error }"
                 placeholder="Telefono"
               />
+              <template v-if="$v.form.phone.$error">
+                <div v-if="!$v.form.phone.required" class="invalid-feedback">
+                  Digite el Telefono
+                </div>
+                <div v-if="!$v.form.phone.maxLength" class="invalid-feedback">
+                  Exede los 20 Caracteres
+                </div>
+              </template>
               <input
+                v-model="form.building_name"
                 type="text"
                 class="intro-x login__input input input--lg border border-gray-300 block mt-4"
+                :class="{ 'is-invalid': $v.form.building_name.$error }"
                 placeholder="Nombre del edificio"
               />
+              <template v-if="$v.form.building_name.$error">
+                <div
+                  v-if="!$v.form.building_name.required"
+                  class="invalid-feedback"
+                >
+                  Digite el Nombre del Edificio
+                </div>
+                <div
+                  v-if="!$v.form.building_name.maxLength"
+                  class="invalid-feedback"
+                >
+                  Exede los 100 Caracteres
+                </div>
+              </template>
               <input
+                v-model="form.building_nit"
                 type="text"
                 class="intro-x login__input input input--lg border border-gray-300 block mt-4"
+                :class="{ 'is-invalid': $v.form.building_nit.$error }"
                 placeholder="Nit del edificio"
               />
+              <template v-if="$v.form.building_nit.$error">
+                <div
+                  v-if="!$v.form.building_nit.required"
+                  class="invalid-feedback"
+                >
+                  Digite el Nit del Edificio
+                </div>
+                <div
+                  v-if="!$v.form.building_nit.maxLength"
+                  class="invalid-feedback"
+                >
+                  Exede los 100 Caracteres
+                </div>
+              </template>
               <input
+                v-model="form.email"
                 type="text"
                 class="intro-x login__input input input--lg border border-gray-300 block mt-4"
+                :class="{ 'is-invalid': $v.form.email.$error }"
                 placeholder="E-mail"
               />
+              <template v-if="$v.form.email.$error">
+                <div v-if="!$v.form.email.required" class="invalid-feedback">
+                  Digite el E-mail
+                </div>
+                <div v-if="!$v.form.email.maxLength" class="invalid-feedback">
+                  Exede los 120 Caracteres
+                </div>
+                <div v-if="!$v.form.email.email" class="invalid-feedback">
+                  No es un E-mail Valido
+                </div>
+              </template>
               <input
+                v-model="form.password"
                 type="password"
                 class="intro-x login__input input input--lg border border-gray-300 block mt-4"
-                placeholder="Password"
+                :class="{ 'is-invalid': $v.form.password.$error }"
+                placeholder="Contraseña"
               />
-              <!-- <div class="intro-x w-full grid grid-cols-12 gap-4 h-1 mt-3">
-                <div class="col-span-3 h-full rounded bg-theme-9"></div>
-                <div class="col-span-3 h-full rounded bg-theme-9"></div>
-                <div class="col-span-3 h-full rounded bg-theme-9"></div>
+              <template v-if="$v.form.password.$error">
+                <div v-if="!$v.form.password.required" class="invalid-feedback">
+                  Digite la Contraseña
+                </div>
                 <div
-                  class="col-span-3 h-full rounded bg-gray-200 dark:bg-dark-2"
-                ></div>
-              </div> -->
-              <!-- <a
-                href=""
-                class="intro-x text-gray-600 block mt-2 text-xs sm:text-sm"
-                >What is a secure password?</a
-              > -->
-              <!-- <input
-                type="text"
-                class="intro-x login__input input input--lg border border-gray-300 block mt-4"
-                placeholder="Password Confirmation"
-              /> -->
+                  v-if="!$v.form.password.maxLength"
+                  class="invalid-feedback"
+                >
+                  Exede los 120 Caracteres
+                </div>
+              </template>
             </div>
             <div
               class="intro-x flex items-center text-gray-700 dark:text-gray-600 mt-4 text-xs sm:text-sm"
             >
               <input
                 id="remember-me"
+                v-model="form.terms"
                 type="checkbox"
                 class="input border mr-2"
+                :class="{ 'is-invalid': $v.form.terms.$error }"
               />
               <label class="cursor-pointer select-none" for="remember-me"
                 >Acepto</label
@@ -118,10 +196,16 @@
               <a class="text-theme-1 dark:text-theme-10 ml-1" href=""
                 >Terminos y Condiciones</a
               >.
+              <template v-if="$v.form.terms.$error">
+                <div v-if="!$v.form.terms.sameAs" class="invalid-feedback">
+                  Falta Aceptar Terminos y Condiciones
+                </div>
+              </template>
             </div>
             <div class="intro-x mt-5 xl:mt-8 text-center xl:text-left">
               <button
                 class="button button--lg w-full xl:w-32 text-white bg-theme-1 xl:mr-3 align-top"
+                @click="sendData()"
               >
                 Registrarme
               </button>
@@ -141,15 +225,94 @@
 
 <script>
 import DarkModeSwitcher from "@/components/DarkModeSwitcher";
+import {
+  required,
+  maxLength,
+  email,
+  sameAs
+} from "vuelidate/lib/validators"; /* importamos las propiedades de la validación */
 
 export default {
   components: {
     DarkModeSwitcher
   },
+  data() {
+    return {
+      form: {
+        name: "",
+        last_name: "",
+        email: "",
+        password: "",
+        phone: "",
+        building_name: "",
+        building_nit: "",
+        terms: false
+      }
+    };
+  },
+  validations() {
+    let form = {
+      form: {
+        name: {
+          required,
+          maxLength: maxLength(100)
+        },
+        last_name: {
+          required,
+          maxLength: maxLength(100)
+        },
+        email: {
+          required,
+          maxLength: maxLength(120),
+          email
+        },
+        password: {
+          required,
+          maxLength: maxLength(30)
+        },
+        phone: {
+          required,
+          maxLength: maxLength(20)
+        },
+        building_name: {
+          required,
+          maxLength: maxLength(100)
+        },
+        building_nit: {
+          required,
+          maxLength: maxLength(100)
+        },
+        terms: {
+          sameAs: sameAs(() => true)
+        }
+      }
+    };
+    return form;
+  },
   mounted() {
     cash("body")
       .removeClass("app")
       .addClass("login");
+  },
+  methods: {
+    sendData() {
+      this.$v.$touch();
+      if (this.$v.$invalid) {
+        return;
+      } else {
+        this.axios({
+          method: "post",
+          url: "auth/register",
+          data: this.form
+        })
+          .then(res => {
+            console.log(res);
+          })
+          .catch(err => {
+            console.error(err);
+          });
+      }
+    }
   }
 };
 </script>
