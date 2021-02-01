@@ -113,42 +113,117 @@
           <div class="intro-y col-span-12 sm:col-span-6">
             <div class="mb-2">Nombre del Edificio:</div>
             <input
-              v-model="form.building_name"
+              v-model="information.name"
               type="text"
               class="input w-full border flex-1"
+              :class="{ 'border-red-500': $v.information.name.$error }"
             />
+            <template v-if="$v.information.name.$error">
+              <div
+                v-if="!$v.information.name.required"
+                class="font-medium text-xs text-red-500 mt-1 ml-1"
+              >
+                Digite el Nombre del Edificio
+              </div>
+              <div
+                v-if="!$v.information.name.maxLength"
+                class="font-medium text-xs text-red-500 mt-1 ml-1"
+              >
+                Exede los 100 Caracteres
+              </div>
+            </template>
           </div>
           <div class="intro-y col-span-12 sm:col-span-6">
             <div class="mb-2">Nombre de la Empresa:</div>
             <input
-              v-model="form.company_name"
+              v-model="information.company_name"
               type="text"
               class="input w-full border flex-1"
+              :class="{ 'border-red-500': $v.information.company_name.$error }"
             />
+            <template v-if="$v.information.company_name.$error">
+              <div
+                v-if="!$v.information.company_name.required"
+                class="font-medium text-xs text-red-500 mt-1 ml-1"
+              >
+                Digite el Nombre de la Empresa
+              </div>
+              <div
+                v-if="!$v.information.company_name.maxLength"
+                class="font-medium text-xs text-red-500 mt-1 ml-1"
+              >
+                Exede los 100 Caracteres
+              </div>
+            </template>
           </div>
           <div class="intro-y col-span-12 sm:col-span-6">
             <div class="mb-2">Nit:</div>
             <input
-              v-model="form.nit"
+              v-model="information.nit"
               type="text"
               class="input w-full border flex-1"
+              :class="{ 'border-red-500': $v.information.nit.$error }"
             />
+            <template v-if="$v.information.nit.$error">
+              <div
+                v-if="!$v.information.nit.required"
+                class="font-medium text-xs text-red-500 mt-1 ml-1"
+              >
+                Digite el Nit
+              </div>
+              <div
+                v-if="!$v.information.nit.maxLength"
+                class="font-medium text-xs text-red-500 mt-1 ml-1"
+              >
+                Exede los 100 Caracteres
+              </div>
+            </template>
           </div>
           <div class="intro-y col-span-12 sm:col-span-6">
             <div class="mb-2">Telefono:</div>
             <input
-              v-model="form.phone"
+              v-model="information.phone"
               type="text"
               class="input w-full border flex-1"
+              :class="{ 'border-red-500': $v.information.phone.$error }"
             />
           </div>
+          <template v-if="$v.information.phone.$error">
+            <div
+              v-if="!$v.information.phone.required"
+              class="font-medium text-xs text-red-500 mt-1 ml-1"
+            >
+              Digite el Telefono
+            </div>
+            <div
+              v-if="!$v.information.phone.maxLength"
+              class="font-medium text-xs text-red-500 mt-1 ml-1"
+            >
+              Exede los 20 Caracteres
+            </div>
+          </template>
           <div class="intro-y col-span-12 sm:col-span-6">
             <div class="mb-2">Dirección:</div>
             <input
-              v-model="form.address"
+              v-model="information.address"
               type="text"
               class="input w-full border flex-1"
+              :class="{ 'border-red-500': $v.information.address.$error }"
             />
+            <template v-if="$v.information.address.$error">
+              <div
+                v-if="!$v.information.address.required"
+                class="font-medium text-xs text-red-500 mt-1 ml-1"
+              >
+                Digite la Dirección
+              </div>
+              <div
+                v-if="!$v.information.address.maxLength"
+                class="font-medium text-xs text-red-500 mt-1 ml-1"
+              >
+                Exede los 100 Caracteres
+              </div>
+            </template>
           </div>
           <!-- <div class="intro-y col-span-12 sm:col-span-6">
             <div class="mb-2">Size</div>
@@ -164,6 +239,7 @@
           >
             <button
               class="button w-24 justify-center block bg-theme-1 text-white"
+              @click="sendInformation()"
             >
               Guardar
             </button>
@@ -1063,22 +1139,36 @@
           </button>
         </div>
       </div>
-      <!-- END: Option 1 -->
+      <!-- END: Option 5 -->
     </div>
     <!-- END: Wizard Layout -->
   </div>
 </template>
 
 <script>
+import {
+  required,
+  maxLength
+  /* sameAs */
+} from "vuelidate/lib/validators"; /* importamos las propiedades de la validación */
+
 export default {
   data() {
     return {
+      building: null,
       generate_room: 0,
       option: 1,
       layout_2: false,
       layout_3: false,
       layout_4: false,
       layout_5: false,
+      information: {
+        name: "",
+        company_name: "",
+        nit: "",
+        phone: "",
+        address: ""
+      },
       form: {
         mni_radio: "",
         basement_radio: "",
@@ -1089,11 +1179,6 @@ export default {
         parking_positions: "",
         initial_floor: "",
         final_floor: "",
-        building_name: "Edificio Prueba Convocatoria",
-        company_name: "Convocatoria Gobernacion",
-        nit: "901001001-1",
-        phone: "3010011111",
-        address: "Calle 1 No. 1-01",
         floors: 4,
         basement: "Si",
         rooftop: "Si",
@@ -1128,6 +1213,58 @@ export default {
       initial_cont: 0
     };
   },
+  created() {
+    this.axios({
+      method: "get",
+      url: "buildings"
+    })
+      .then(res => {
+        //console.log(res.data.content);
+        this.building = res.data.content;
+        this.information.name = res.data.content.name;
+        this.information.company_name = res.data.content.company_name;
+        this.information.nit = res.data.content.nit;
+        this.information.phone = res.data.content.phone;
+        this.information.address = res.data.content.address;
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  },
+  validations() {
+    if (this.option == 1) {
+      let information = {
+        information: {
+          name: {
+            required,
+            maxLength: maxLength(100)
+          },
+          company_name: {
+            required,
+            maxLength: maxLength(100)
+          },
+          nit: {
+            required,
+            maxLength: maxLength(100)
+          },
+          phone: {
+            required,
+            maxLength: maxLength(20)
+          },
+          address: {
+            required,
+            maxLength: maxLength(100)
+          }
+        }
+      };
+      return information;
+    } else {
+      let information = {
+        information: {}
+      };
+      return information;
+    }
+  },
   methods: {
     changeOption(option) {
       this.option = option;
@@ -1161,6 +1298,24 @@ export default {
     },
     change_mni() {
       this.initial_cont = parseInt(this.form.initial_floor) - 1;
+    },
+    sendInformation() {
+      this.$v.$touch();
+      if (this.$v.$invalid) {
+        return;
+      } else {
+        this.axios({
+          method: "put",
+          url: `buildings/${this.building.id}`,
+          data: this.information
+        })
+          .then(res => {
+            console.log(res);
+          })
+          .catch(err => {
+            console.error(err);
+          });
+      }
     }
   }
 };

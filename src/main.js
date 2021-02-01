@@ -17,10 +17,11 @@ import "./assets/sass/app.scss";
 
 Vue.config.productionTip = false;
 
-const baseURL = "http://127.0.0.1:8000/api/v1/";
-//const baseURL = process.env.API_BASE_URL;
-if (typeof baseURL !== "undefined") {
-  Vue.axios.defaults.baseURL = baseURL;
+const baseUrl = "http://127.0.0.1:8000/api/v1/";
+//export const baseUrl = process.env.API_BASE_URL;
+//const baseUrl = process.env.baseUrl;
+if (typeof baseUrl !== "undefined") {
+  Vue.axios.defaults.baseURL = baseUrl;
 }
 /* window.axios = axios;
 axios.defaults.baseURL = process.env.API_BASE_URL; */

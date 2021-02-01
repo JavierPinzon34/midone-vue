@@ -2,8 +2,10 @@ const webpack = require("webpack");
 const path = require("path");
 const CKEditorWebpackPlugin = require("@ckeditor/ckeditor5-dev-webpack-plugin");
 const { styles } = require("@ckeditor/ckeditor5-dev-utils");
+//const apiBaseUrl = process.env.API_BASE_URL || 'http://127.0.0.1:8000/api/v1/';
 
 module.exports = {
+  //baseUrl = apiBaseUrl,
   configureWebpack: {
     plugins: [
       new webpack.ProvidePlugin({

@@ -54,14 +54,20 @@
                 v-model="form.name"
                 type="text"
                 class="intro-x login__input input input--lg border border-gray-300 block"
-                :class="{ 'is-invalid': $v.form.name.$error }"
+                :class="{ 'border-red-500': $v.form.name.$error }"
                 placeholder="Nombre"
               />
               <template v-if="$v.form.name.$error">
-                <div v-if="!$v.form.name.required" class="invalid-feedback">
+                <div
+                  v-if="!$v.form.name.required"
+                  class="font-medium text-xs text-red-500 mt-1 ml-1"
+                >
                   Digite el Nombre
                 </div>
-                <div v-if="!$v.form.name.maxLength" class="invalid-feedback">
+                <div
+                  v-if="!$v.form.name.maxLength"
+                  class="font-medium text-xs text-red-500 mt-1 ml-1"
+                >
                   Exede los 100 Caracteres
                 </div>
               </template>
@@ -69,19 +75,19 @@
                 v-model="form.last_name"
                 type="text"
                 class="intro-x login__input input input--lg border border-gray-300 block mt-4"
-                :class="{ 'is-invalid': $v.form.last_name.$error }"
+                :class="{ 'border-red-500': $v.form.last_name.$error }"
                 placeholder="Apellido"
               />
               <template v-if="$v.form.last_name.$error">
                 <div
                   v-if="!$v.form.last_name.required"
-                  class="invalid-feedback"
+                  class="font-medium text-xs text-red-500 mt-1 ml-1"
                 >
                   Digite el Apellido
                 </div>
                 <div
                   v-if="!$v.form.last_name.maxLength"
-                  class="invalid-feedback"
+                  class="font-medium text-xs text-red-500 mt-1 ml-1"
                 >
                   Exede los 120 Caracteres
                 </div>
@@ -90,14 +96,20 @@
                 v-model="form.phone"
                 type="text"
                 class="intro-x login__input input input--lg border border-gray-300 block mt-4"
-                :class="{ 'is-invalid': $v.form.phone.$error }"
+                :class="{ 'border-red-500': $v.form.phone.$error }"
                 placeholder="Telefono"
               />
               <template v-if="$v.form.phone.$error">
-                <div v-if="!$v.form.phone.required" class="invalid-feedback">
+                <div
+                  v-if="!$v.form.phone.required"
+                  class="font-medium text-xs text-red-500 mt-1 ml-1"
+                >
                   Digite el Telefono
                 </div>
-                <div v-if="!$v.form.phone.maxLength" class="invalid-feedback">
+                <div
+                  v-if="!$v.form.phone.maxLength"
+                  class="font-medium text-xs text-red-500 mt-1 ml-1"
+                >
                   Exede los 20 Caracteres
                 </div>
               </template>
@@ -105,19 +117,19 @@
                 v-model="form.building_name"
                 type="text"
                 class="intro-x login__input input input--lg border border-gray-300 block mt-4"
-                :class="{ 'is-invalid': $v.form.building_name.$error }"
+                :class="{ 'border-red-500': $v.form.building_name.$error }"
                 placeholder="Nombre del edificio"
               />
               <template v-if="$v.form.building_name.$error">
                 <div
                   v-if="!$v.form.building_name.required"
-                  class="invalid-feedback"
+                  class="font-medium text-xs text-red-500 mt-1 ml-1"
                 >
                   Digite el Nombre del Edificio
                 </div>
                 <div
                   v-if="!$v.form.building_name.maxLength"
-                  class="invalid-feedback"
+                  class="font-medium text-xs text-red-500 mt-1 ml-1"
                 >
                   Exede los 100 Caracteres
                 </div>
@@ -126,19 +138,19 @@
                 v-model="form.building_nit"
                 type="text"
                 class="intro-x login__input input input--lg border border-gray-300 block mt-4"
-                :class="{ 'is-invalid': $v.form.building_nit.$error }"
+                :class="{ 'border-red-500': $v.form.building_nit.$error }"
                 placeholder="Nit del edificio"
               />
               <template v-if="$v.form.building_nit.$error">
                 <div
                   v-if="!$v.form.building_nit.required"
-                  class="invalid-feedback"
+                  class="font-medium text-xs text-red-500 mt-1 ml-1"
                 >
                   Digite el Nit del Edificio
                 </div>
                 <div
                   v-if="!$v.form.building_nit.maxLength"
-                  class="invalid-feedback"
+                  class="font-medium text-xs text-red-500 mt-1 ml-1"
                 >
                   Exede los 100 Caracteres
                 </div>
@@ -147,17 +159,26 @@
                 v-model="form.email"
                 type="text"
                 class="intro-x login__input input input--lg border border-gray-300 block mt-4"
-                :class="{ 'is-invalid': $v.form.email.$error }"
+                :class="{ 'border-red-500': $v.form.email.$error }"
                 placeholder="E-mail"
               />
               <template v-if="$v.form.email.$error">
-                <div v-if="!$v.form.email.required" class="invalid-feedback">
+                <div
+                  v-if="!$v.form.email.required"
+                  class="font-medium text-xs text-red-500 mt-1 ml-1"
+                >
                   Digite el E-mail
                 </div>
-                <div v-if="!$v.form.email.maxLength" class="invalid-feedback">
+                <div
+                  v-if="!$v.form.email.maxLength"
+                  class="font-medium text-xs text-red-500 mt-1 ml-1"
+                >
                   Exede los 120 Caracteres
                 </div>
-                <div v-if="!$v.form.email.email" class="invalid-feedback">
+                <div
+                  v-if="!$v.form.email.email"
+                  class="font-medium text-xs text-red-500 mt-1 ml-1"
+                >
                   No es un E-mail Valido
                 </div>
               </template>
@@ -165,22 +186,25 @@
                 v-model="form.password"
                 type="password"
                 class="intro-x login__input input input--lg border border-gray-300 block mt-4"
-                :class="{ 'is-invalid': $v.form.password.$error }"
+                :class="{ 'border-red-500': $v.form.password.$error }"
                 placeholder="Contraseña"
               />
               <template v-if="$v.form.password.$error">
-                <div v-if="!$v.form.password.required" class="invalid-feedback">
+                <div
+                  v-if="!$v.form.password.required"
+                  class="font-medium text-xs text-red-500 mt-1 ml-1"
+                >
                   Digite la Contraseña
                 </div>
                 <div
                   v-if="!$v.form.password.maxLength"
-                  class="invalid-feedback"
+                  class="font-medium text-xs text-red-500 mt-1 ml-1"
                 >
                   Exede los 120 Caracteres
                 </div>
               </template>
             </div>
-            <div
+            <!-- <div
               class="intro-x flex items-center text-gray-700 dark:text-gray-600 mt-4 text-xs sm:text-sm"
             >
               <input
@@ -188,7 +212,7 @@
                 v-model="form.terms"
                 type="checkbox"
                 class="input border mr-2"
-                :class="{ 'is-invalid': $v.form.terms.$error }"
+                :class="{ 'border-red-500': $v.form.terms.$error }"
               />
               <label class="cursor-pointer select-none" for="remember-me"
                 >Acepto</label
@@ -196,24 +220,33 @@
               <a class="text-theme-1 dark:text-theme-10 ml-1" href=""
                 >Terminos y Condiciones</a
               >.
-              <template v-if="$v.form.terms.$error">
-                <div v-if="!$v.form.terms.sameAs" class="invalid-feedback">
-                  Falta Aceptar Terminos y Condiciones
-                </div>
-              </template>
             </div>
+            <template v-if="$v.form.terms.$error">
+              <div
+                v-if="!$v.form.terms.sameAs"
+                class="font-medium text-xs text-red-500 mt-1 ml-1"
+              >
+                Falta Aceptar Terminos y Condiciones
+              </div>
+            </template> -->
             <div class="intro-x mt-5 xl:mt-8 text-center xl:text-left">
               <button
-                class="button button--lg w-full xl:w-32 text-white bg-theme-1 xl:mr-3 align-top"
+                class="button button--lg w-full xl:w-32 text-white bg-theme-1 xl:mr-3"
                 @click="sendData()"
               >
                 Registrarme
               </button>
-              <button
-                class="button button--lg w-full xl:w-32 text-gray-700 border border-gray-300 dark:border-dark-5 dark:text-gray-300 mt-3 xl:mt-0 align-top"
+              <router-link
+                class="button button--lg w-full xl:w-32 text-white text-gray-700 border border-gray-300 dark:border-dark-5 dark:text-gray-300 xl:mr-3"
+                to="/login"
               >
                 Iniciar
-              </button>
+              </router-link>
+              <!-- <button
+                class="button button--lg w-full xl:w-32 text-gray-700 border border-gray-300 dark:border-dark-5 dark:text-gray-300 mt-3 xl:mt-0"
+              >
+                Iniciar
+              </button> -->
             </div>
           </div>
         </div>
@@ -228,8 +261,8 @@ import DarkModeSwitcher from "@/components/DarkModeSwitcher";
 import {
   required,
   maxLength,
-  email,
-  sameAs
+  email
+  /* sameAs */
 } from "vuelidate/lib/validators"; /* importamos las propiedades de la validación */
 
 export default {
@@ -281,10 +314,11 @@ export default {
         building_nit: {
           required,
           maxLength: maxLength(100)
-        },
+        }
+        /*Validacion de checkbox para aceptar los terminos y condiciones 
         terms: {
           sameAs: sameAs(() => true)
-        }
+        } */
       }
     };
     return form;
