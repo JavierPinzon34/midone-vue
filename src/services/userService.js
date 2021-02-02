@@ -11,7 +11,7 @@ export default {
       return false;
     }
   }
-   /* async send_payment(data){
+  /* async send_payment(data){
         try {
             //let url='https://derco-dev.azure-api.net/boton-pago/v1/payment/';
             let url=process.env.VUE_APP_BASE_URI+'boton-pago/v1/payment/';

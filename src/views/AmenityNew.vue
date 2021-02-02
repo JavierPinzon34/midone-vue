@@ -3,7 +3,7 @@
     <!-- BEGIN: Document title -->
     <div class="intro-y flex flex-col sm:flex-row items-center mt-4 mb-5">
       <h2 class="text-2xl font-medium mr-auto border-b-2">
-        Amenidades<span class="font-normal text-lg"> (Edición)</span>
+        Amenidades<span class="font-normal text-lg"> (Nueva)</span>
       </h2>
     </div>
     <!-- END: Document title -->
@@ -247,15 +247,9 @@
     </div>
     <!-- BEGIN: Document title -->
     <div class="intro-y flex flex-col sm:flex-row mt-8">
-      <button
-        class="button w-24 justify-center block bg-theme-9 text-white"
-        @click="sendInformation()"
-      >
+      <a type="button" class="button w-full sm:w-auto bg-theme-9 text-white">
         Actualizar
-      </button>
-      <!-- <a type="button" class="button w-full sm:w-auto bg-theme-9 text-white">
-        Actualizar
-      </a> -->
+      </a>
       <!-- <a
         type="button"
         class="button w-full sm:w-auto mt-2 sm:mt-0 sm:ml-1 bg-theme-6 text-white"

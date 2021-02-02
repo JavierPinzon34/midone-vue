@@ -235,6 +235,7 @@
             </select>
           </div> -->
           <div
+            v-if="sending == false"
             class="intro-y col-span-12 flex items-center justify-center sm:justify-start"
           >
             <button
@@ -243,6 +244,12 @@
             >
               Guardar
             </button>
+          </div>
+          <div
+            v-else
+            class="intro-y col-span-12 flex items-center justify-center sm:justify-start"
+          >
+            <LoadingIcon icon="tail-spin" class="w-12 h-12" />
           </div>
           <div
             class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-5"
@@ -1210,7 +1217,8 @@ export default {
         floor: "null"
       },
       roomDetail: [],
-      initial_cont: 0
+      initial_cont: 0,
+      sending: false
     };
   },
   created() {
@@ -1304,6 +1312,7 @@ export default {
       if (this.$v.$invalid) {
         return;
       } else {
+        this.sending = true;
         this.axios({
           method: "put",
           url: `buildings/${this.building.id}`,
@@ -1311,6 +1320,16 @@ export default {
         })
           .then(res => {
             console.log(res);
+            setTimeout(() => {
+              this.$swal({
+                icon: "success",
+                title: res.data.message,
+                showConfirmButton: true,
+                timer: 2000
+              });
+              this.sending = false;
+              //this.$swal("Hello Vue world!!!");
+            }, 1000);
           })
           .catch(err => {
             console.error(err);
