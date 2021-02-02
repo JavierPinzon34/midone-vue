@@ -4,6 +4,7 @@ import main from "./main";
 import sideMenu from "./side-menu";
 import simpleMenu from "./simple-menu";
 import topMenu from "./top-menu";
+import administration from "./administration";
 
 Vue.use(Vuex);
 
@@ -12,6 +13,7 @@ export default new Vuex.Store({
     main: main,
     sideMenu: sideMenu,
     simpleMenu: simpleMenu,
-    topMenu: topMenu
+    topMenu: topMenu,
+    administration: administration
   }
 });

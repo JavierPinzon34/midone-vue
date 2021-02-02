@@ -10,11 +10,13 @@ import VueAxios from "vue-axios";
 import VCalendar from "v-calendar";
 import Vuelidate from "vuelidate";
 import VueSweetalert2 from "vue-sweetalert2";
+import Vuex from "vuex";
 
 Vue.use(VueAxios, axios);
 Vue.use(VCalendar);
 Vue.use(Vuelidate);
 Vue.use(VueSweetalert2);
+Vue.use(Vuex);
 // Midone Theme
 import "./assets/sass/app.scss";
 // If you don't need the styles, do not connect

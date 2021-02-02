@@ -706,7 +706,22 @@
                 v-model="form.parking_name"
                 type="text"
                 class="input w-full border flex-1"
+                :class="{ 'border-red-500': $v.form.parking_name.$error }"
               />
+              <template v-if="$v.form.parking_name.$error">
+                <div
+                  v-if="!$v.form.parking_name.required"
+                  class="font-medium text-xs text-red-500 mt-1 ml-1"
+                >
+                  Digite el Nombre del Parqueadero
+                </div>
+                <div
+                  v-if="!$v.form.parking_name.maxLength"
+                  class="font-medium text-xs text-red-500 mt-1 ml-1"
+                >
+                  Exede los 100 Caracteres
+                </div>
+              </template>
             </div>
             <div class="intro-y col-span-12 sm:col-span-6 md:col-span-3">
               <div class="mb-2">Puestos:</div>
@@ -714,11 +729,24 @@
                 v-model="form.parking_positions"
                 type="text"
                 class="input w-full border flex-1"
+                :class="{ 'border-red-500': $v.form.parking_positions.$error }"
               />
+              <template v-if="$v.form.parking_positions.$error">
+                <div
+                  v-if="!$v.form.parking_positions.required"
+                  class="font-medium text-xs text-red-500 mt-1 ml-1"
+                >
+                  Digite la Cantidad de Puestos
+                </div>
+              </template>
             </div>
             <div class="intro-y col-span-12 sm:col-span-6 md:col-span-3">
               <div class="mb-2">Pisos:</div>
-              <div>
+              <div
+                :class="{
+                  'parking-select-invalid': $v.form.parking_floors.$error
+                }"
+              >
                 <TailSelect
                   v-model="form.parking_floors"
                   :options="{
@@ -726,11 +754,24 @@
                     classNames: 'w-full'
                   }"
                 >
-                  <option value="null">Seleccione una opción</option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
+                  <option value="0">Seleccione una opción</option>
+                  <option
+                    v-for="(floor, index) in allFloors"
+                    :key="index"
+                    :value="floor.id"
+                  >
+                    {{ floor.code }}
+                  </option>
                 </TailSelect>
               </div>
+              <template v-if="$v.form.parking_floors.$error">
+                <div
+                  v-if="!$v.form.parking_floors.required"
+                  class="font-medium text-xs text-red-500 mt-1 ml-1"
+                >
+                  Seleccione el piso
+                </div>
+              </template>
             </div>
           </div>
           <div
@@ -739,6 +780,7 @@
             <button
               v-if="option != 1"
               class="button w-24 justify-center block bg-theme-3 text-white"
+              @click="sendParking()"
             >
               Guardar
             </button>
@@ -917,8 +959,13 @@
                   }"
                 >
                   <option value="null">Seleccione una opción</option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
+                  <option
+                    v-for="(floor, index) in allFloors"
+                    :key="index"
+                    :value="floor.id"
+                  >
+                    {{ floor.code }}
+                  </option>
                 </TailSelect>
               </div>
             </div>
@@ -1221,6 +1268,11 @@ export default {
       sending: false
     };
   },
+  computed: {
+    allFloors() {
+      return this.$store.getters.allFloors;
+    }
+  },
   created() {
     this.axios({
       method: "get",
@@ -1238,6 +1290,7 @@ export default {
       .catch(err => {
         console.error(err);
       });
+    this.$store.dispatch("getFloors", 3);
   },
   validations() {
     if (this.option == 1) {
@@ -1266,6 +1319,22 @@ export default {
         }
       };
       return information;
+    } else if (this.option == 3) {
+      let parking = {
+        form: {
+          parking_name: {
+            required,
+            maxLength: maxLength(100)
+          },
+          parking_floors: {
+            required
+          },
+          parking_positions: {
+            required
+          }
+        }
+      };
+      return parking;
     } else {
       let information = {
         information: {}
@@ -1335,6 +1404,42 @@ export default {
             console.error(err);
           });
       }
+    },
+    sendParking() {
+      if (this.form.parking_floors == "0") {
+        this.form.parking_floors = "";
+      }
+      this.$v.$touch();
+      if (this.$v.$invalid) {
+        return;
+      } else {
+        this.sendingParking = true;
+        let infoParking = {
+          code: this.form.parking_name,
+          parent_id: this.form.parking_floors,
+          division_types_id: 4,
+          buildings_id: this.building.id,
+          division_childs_types_id: 5
+        };
+        this.axios
+          .post(`buildings/${this.building.id}`, infoParking)
+          .then(res => {
+            console.log(res);
+            setTimeout(() => {
+              this.$swal({
+                icon: "success",
+                title: res.data.message,
+                showConfirmButton: true,
+                timer: 2000
+              });
+              this.sendingParking = false;
+              //this.$swal("Hello Vue world!!!");
+            }, 1000);
+          })
+          .catch(err => {
+            console.error(err);
+          });
+      }
     }
   }
 };
@@ -1386,6 +1491,13 @@ export default {
       }
       .title-active {
         font-weight: 700;
+      }
+    }
+    .parking-select-invalid {
+      .tail-select {
+        .select-label {
+          border: 1px solid red;
+        }
       }
     }
   }
