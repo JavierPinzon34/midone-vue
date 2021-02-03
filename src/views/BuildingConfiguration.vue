@@ -592,6 +592,7 @@
               >Nuevo</a
             >
           </div>
+          <!-- BEGIN: Modal -->
           <div id="medium-modal-parking" class="modal">
             <div class="modal__content text-center">
               <div
@@ -607,40 +608,79 @@
                 <div class="intro-y col-span-12">
                   <div class="mb-1 flex justify-start">Nombre:</div>
                   <input
-                    v-model="newParking.name"
+                    v-model="form.parking_name"
                     type="text"
                     class="input w-full border flex-1"
+                    :class="{ 'border-red-500': $v.form.parking_name.$error }"
                   />
+                  <template v-if="$v.form.parking_name.$error">
+                    <div
+                      v-if="!$v.form.parking_name.required"
+                      class="font-medium text-xs text-red-500 mt-1 ml-1"
+                    >
+                      Digite el Nombre del Parqueadero
+                    </div>
+                    <div
+                      v-if="!$v.form.parking_name.maxLength"
+                      class="font-medium text-xs text-red-500 mt-1 ml-1"
+                    >
+                      Exede los 100 Caracteres
+                    </div>
+                  </template>
                 </div>
                 <div class="intro-y col-span-12 mt-2">
                   <div class="mb-1 flex justify-start">Puestos:</div>
                   <input
-                    v-model="newParking.post"
+                    v-model="form.parking_positions"
                     type="number"
                     min="0"
                     class="input w-full border flex-1"
+                    :class="{
+                      'border-red-500': $v.form.parking_positions.$error
+                    }"
                   />
+                  <template v-if="$v.form.parking_positions.$error">
+                    <div
+                      v-if="!$v.form.parking_positions.required"
+                      class="font-medium text-xs text-red-500 mt-1 ml-1"
+                    >
+                      Digite la Cantidad de Puestos
+                    </div>
+                  </template>
                 </div>
                 <div class="intro-y col-span-12 mt-2">
                   <div class="mb-1 flex justify-start">Piso:</div>
                   <select
-                    v-model="newParking.floor"
+                    v-model="form.parking_floors"
                     class="input w-full border flex-1"
+                    :class="{ 'border-red-500': $v.form.parking_floors.$error }"
                   >
-                    <option value="null">Seleccione</option>
-                    <option value="1">Sótano 1</option>
-                    <option value="2">Piso 1</option>
-                    <option value="3">Piso 2</option>
-                    <option value="4">Azotea 1</option>
+                    <option value="0">Seleccione una opción</option>
+                    <option
+                      v-for="(floor, index) in allFloors"
+                      :key="index"
+                      :value="floor.id"
+                    >
+                      {{ floor.code }}
+                    </option>
                   </select>
+                  <template v-if="$v.form.parking_floors.$error">
+                    <div
+                      v-if="!$v.form.parking_floors.required"
+                      class="font-medium text-xs text-red-500 mt-1 ml-1"
+                    >
+                      Seleccione el piso
+                    </div>
+                  </template>
                 </div>
               </div>
               <div
                 class="intro-y col-span-12 flex items-center justify-center p-5"
               >
                 <button
-                  class="button w-24 justify-center block bg-theme-1 text-white mr-2"
-                  @click="nextOption()"
+                  v-if="status_save_parking"
+                  class="button w-24 justify-center block bg-theme-3 text-white"
+                  @click="sendDivisions(4, 5)"
                 >
                   Guardar
                 </button>
@@ -653,6 +693,7 @@
               </div>
             </div>
           </div>
+          <!-- END: Modal -->
           <div class="preview">
             <div class="overflow-x-auto">
               <table class="table">
@@ -676,20 +717,28 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
+                  <tr v-for="item in allParkings" :key="item.id">
                     <td class="border-b whitespace-no-wrap">
-                      {{ form.parking_name }}
+                      {{ item.code }}
                     </td>
                     <td class="border-b whitespace-no-wrap">
-                      {{ form.parking_positions }}
+                      {{ item.childrens.length }}
                     </td>
                     <td class="border-b whitespace-no-wrap">
-                      <router-link
+                      <a
+                        href="javascript:;"
+                        data-toggle="modal"
+                        data-target="#medium-modal-parking"
+                        class="button mr-1 w-10 mb-2 inline-block bg-gray-500 text-white"
+                        @click="dataModalParking(item)"
+                        ><EyeIcon class="w-4 h-4" />
+                      </a>
+                      <!-- <router-link
                         class="button flex min-w-10 w-10 bg-gray-500 text-white"
                         to="/amenity-edit"
                       >
                         <EyeIcon class="w-4 h-4" />
-                      </router-link>
+                      </router-link> -->
                     </td>
                   </tr>
                 </tbody>
@@ -747,7 +796,7 @@
                   'parking-select-invalid': $v.form.parking_floors.$error
                 }"
               >
-                <TailSelect
+                <!-- <TailSelect
                   v-model="form.parking_floors"
                   :options="{
                     search: true,
@@ -762,7 +811,21 @@
                   >
                     {{ floor.code }}
                   </option>
-                </TailSelect>
+                </TailSelect> -->
+                <select
+                  v-model="form.parking_floors"
+                  class="input w-full border flex-1"
+                  :class="{ 'border-red-500': $v.form.parking_floors.$error }"
+                >
+                  <option value="0">Seleccione una opción</option>
+                  <option
+                    v-for="(floor, index) in allFloors"
+                    :key="index"
+                    :value="floor.id"
+                  >
+                    {{ floor.code }}
+                  </option>
+                </select>
               </div>
               <template v-if="$v.form.parking_floors.$error">
                 <div
@@ -778,9 +841,8 @@
             class="intro-y col-span-12 flex items-center justify-center sm:justify-start mt-8"
           >
             <button
-              v-if="option != 1"
               class="button w-24 justify-center block bg-theme-3 text-white"
-              @click="sendParking()"
+              @click="sendDivisions(4, 5)"
             >
               Guardar
             </button>
@@ -824,6 +886,7 @@
               >Nuevo</a
             >
           </div>
+          <!-- BEGIN: Modal -->
           <div id="medium-modal-deposit" class="modal">
             <div class="modal__content text-center">
               <div
@@ -831,7 +894,7 @@
               >
                 <div class="ml-3 mr-auto">
                   <span class="text-lg">
-                    Formulario de registro de bodega
+                    Formulario de registro de depositos
                   </span>
                 </div>
               </div>
@@ -839,40 +902,79 @@
                 <div class="intro-y col-span-12">
                   <div class="mb-1 flex justify-start">Nombre:</div>
                   <input
-                    v-model="newDeposit.name"
+                    v-model="form.deposit_name"
                     type="text"
                     class="input w-full border flex-1"
+                    :class="{ 'border-red-500': $v.form.deposit_name.$error }"
                   />
+                  <template v-if="$v.form.deposit_name.$error">
+                    <div
+                      v-if="!$v.form.deposit_name.required"
+                      class="font-medium text-xs text-red-500 mt-1 ml-1"
+                    >
+                      Digite el Nombre del Parqueadero
+                    </div>
+                    <div
+                      v-if="!$v.form.deposit_name.maxLength"
+                      class="font-medium text-xs text-red-500 mt-1 ml-1"
+                    >
+                      Exede los 100 Caracteres
+                    </div>
+                  </template>
                 </div>
                 <div class="intro-y col-span-12 mt-2">
                   <div class="mb-1 flex justify-start">Puestos:</div>
                   <input
-                    v-model="newDeposit.post"
+                    v-model="form.deposit_positions"
                     type="number"
                     min="0"
                     class="input w-full border flex-1"
+                    :class="{
+                      'border-red-500': $v.form.deposit_positions.$error
+                    }"
                   />
+                  <template v-if="$v.form.deposit_positions.$error">
+                    <div
+                      v-if="!$v.form.deposit_positions.required"
+                      class="font-medium text-xs text-red-500 mt-1 ml-1"
+                    >
+                      Digite la Cantidad de Puestos
+                    </div>
+                  </template>
                 </div>
                 <div class="intro-y col-span-12 mt-2">
                   <div class="mb-1 flex justify-start">Piso:</div>
                   <select
-                    v-model="newDeposit.floor"
+                    v-model="form.deposit_floors"
                     class="input w-full border flex-1"
+                    :class="{ 'border-red-500': $v.form.deposit_floors.$error }"
                   >
-                    <option value="null">Seleccione</option>
-                    <option value="1">Sótano 1</option>
-                    <option value="2">Piso 1</option>
-                    <option value="3">Piso 2</option>
-                    <option value="4">Azotea 1</option>
+                    <option value="0">Seleccione una opción</option>
+                    <option
+                      v-for="(floor, index) in allFloors"
+                      :key="index"
+                      :value="floor.id"
+                    >
+                      {{ floor.code }}
+                    </option>
                   </select>
+                  <template v-if="$v.form.deposit_floors.$error">
+                    <div
+                      v-if="!$v.form.deposit_floors.required"
+                      class="font-medium text-xs text-red-500 mt-1 ml-1"
+                    >
+                      Seleccione el piso
+                    </div>
+                  </template>
                 </div>
               </div>
               <div
                 class="intro-y col-span-12 flex items-center justify-center p-5"
               >
                 <button
-                  class="button w-24 justify-center block bg-theme-1 text-white mr-2"
-                  @click="nextOption()"
+                  v-if="status_save_deposit"
+                  class="button w-24 justify-center block bg-theme-3 text-white"
+                  @click="sendDivisions(6, 7)"
                 >
                   Guardar
                 </button>
@@ -885,6 +987,7 @@
               </div>
             </div>
           </div>
+          <!-- END: Modal -->
           <div class="preview">
             <div class="overflow-x-auto">
               <table class="table">
@@ -908,20 +1011,22 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
+                  <tr v-for="item in allDeposits" :key="item.id">
                     <td class="border-b whitespace-no-wrap">
-                      {{ form.deposit_name }}
+                      {{ item.code }}
                     </td>
                     <td class="border-b whitespace-no-wrap">
-                      {{ form.deposit_positions }}
+                      {{ item.childrens.length }}
                     </td>
                     <td class="border-b whitespace-no-wrap">
-                      <router-link
-                        class="button flex min-w-10 w-10 bg-gray-500 text-white"
-                        to="/amenity-edit"
-                      >
-                        <EyeIcon class="w-4 h-4" />
-                      </router-link>
+                      <a
+                        href="javascript:;"
+                        data-toggle="modal"
+                        data-target="#medium-modal-deposit"
+                        class="button mr-1 w-10 mb-2 inline-block bg-gray-500 text-white"
+                        @click="dataModalDeposit(item)"
+                        ><EyeIcon class="w-4 h-4" />
+                      </a>
                     </td>
                   </tr>
                 </tbody>
@@ -938,7 +1043,22 @@
                 v-model="form.deposit_name"
                 type="text"
                 class="input w-full border flex-1"
+                :class="{ 'border-red-500': $v.form.deposit_name.$error }"
               />
+              <template v-if="$v.form.deposit_name.$error">
+                <div
+                  v-if="!$v.form.deposit_name.required"
+                  class="font-medium text-xs text-red-500 mt-1 ml-1"
+                >
+                  Digite el Nombre del Parqueadero
+                </div>
+                <div
+                  v-if="!$v.form.deposit_name.maxLength"
+                  class="font-medium text-xs text-red-500 mt-1 ml-1"
+                >
+                  Exede los 100 Caracteres
+                </div>
+              </template>
             </div>
             <div class="intro-y col-span-12 sm:col-span-6 md:col-span-3">
               <div class="mb-2">Puestos:</div>
@@ -946,12 +1066,21 @@
                 v-model="form.deposit_positions"
                 type="text"
                 class="input w-full border flex-1"
+                :class="{ 'border-red-500': $v.form.deposit_positions.$error }"
               />
+              <template v-if="$v.form.deposit_positions.$error">
+                <div
+                  v-if="!$v.form.deposit_positions.required"
+                  class="font-medium text-xs text-red-500 mt-1 ml-1"
+                >
+                  Digite la Cantidad de Puestos
+                </div>
+              </template>
             </div>
             <div class="intro-y col-span-12 sm:col-span-6 md:col-span-3">
               <div class="mb-2">Pisos:</div>
               <div>
-                <TailSelect
+                <!-- <TailSelect
                   v-model="form.deposit_floors"
                   :options="{
                     search: true,
@@ -966,7 +1095,29 @@
                   >
                     {{ floor.code }}
                   </option>
-                </TailSelect>
+                </TailSelect> -->
+                <select
+                  v-model="form.deposit_floors"
+                  class="input w-full border flex-1"
+                  :class="{ 'border-red-500': $v.form.deposit_floors.$error }"
+                >
+                  <option value="0">Seleccione una opción</option>
+                  <option
+                    v-for="(floor, index) in allFloors"
+                    :key="index"
+                    :value="floor.id"
+                  >
+                    {{ floor.code }}
+                  </option>
+                </select>
+                <template v-if="$v.form.deposit_floors.$error">
+                  <div
+                    v-if="!$v.form.deposit_floors.required"
+                    class="font-medium text-xs text-red-500 mt-1 ml-1"
+                  >
+                    Seleccione el piso
+                  </div>
+                </template>
               </div>
             </div>
           </div>
@@ -976,6 +1127,7 @@
             <button
               v-if="option != 1"
               class="button w-24 justify-center block bg-theme-3 text-white"
+              @click="sendDivisions(6, 7)"
             >
               Guardar
             </button>
@@ -1216,6 +1368,8 @@ export default {
       layout_3: false,
       layout_4: false,
       layout_5: false,
+      status_save_parking: true,
+      status_save_deposit: true,
       information: {
         name: "",
         company_name: "",
@@ -1240,6 +1394,7 @@ export default {
         end_property: "Piso 2",
         deposit_name: "",
         deposit_positions: "",
+        deposit_floors: "",
         room1: 4,
         room2: 6,
         room3: 8,
@@ -1271,6 +1426,28 @@ export default {
   computed: {
     allFloors() {
       return this.$store.getters.allFloors;
+    },
+    allParkings() {
+      return this.$store.getters.allParkings;
+    },
+    allDeposits() {
+      return this.$store.getters.allDeposits;
+    }
+  },
+  watch: {
+    allParkings() {
+      if (this.allParkings.length) {
+        this.layout_3 = true;
+      } else {
+        this.layout_3 = false;
+      }
+    },
+    allDeposits() {
+      if (this.allDeposits.length) {
+        this.layout_4 = true;
+      } else {
+        this.layout_4 = false;
+      }
     }
   },
   created() {
@@ -1335,6 +1512,22 @@ export default {
         }
       };
       return parking;
+    } else if (this.option == 4) {
+      let deposit = {
+        form: {
+          deposit_name: {
+            required,
+            maxLength: maxLength(100)
+          },
+          deposit_floors: {
+            required
+          },
+          deposit_positions: {
+            required
+          }
+        }
+      };
+      return deposit;
     } else {
       let information = {
         information: {}
@@ -1343,24 +1536,54 @@ export default {
     }
   },
   methods: {
+    getChildsBuilding(option) {
+      if (option == 3) {
+        const params = {
+          type: 4,
+          buildings_id: this.building.id
+        };
+        this.$store.dispatch("getParkings", params);
+      } else if (option == 4) {
+        const params = {
+          type: 6,
+          buildings_id: this.building.id
+        };
+        this.$store.dispatch("getDeposits", params);
+      }
+    },
     changeOption(option) {
       this.option = option;
+      this.getChildsBuilding(option);
     },
     nextOption() {
       if (this.option < 5) {
         this.option = this.option + 1;
+        //console.log(this.option);
+        this.getChildsBuilding(this.option);
       }
     },
     previousOption() {
       if (this.option > 1) {
         this.option = this.option - 1;
+        //console.log(this.option);
+        this.getChildsBuilding(this.option);
       }
     },
     hideModalParking() {
       cash("#medium-modal-parking").modal("hide");
+      this.$v.$reset();
+      this.form.parking_floors = "";
+      this.form.parking_name = "";
+      this.form.parking_positions = "";
+      this.status_save_parking = true;
     },
     hideModalDeposit() {
       cash("#medium-modal-deposit").modal("hide");
+      this.$v.$reset();
+      this.form.deposit_floors = "";
+      this.form.deposit_name = "";
+      this.form.deposit_positions = "";
+      this.status_save_deposit = true;
     },
     generateRooms() {
       let me = this;
@@ -1405,24 +1628,40 @@ export default {
           });
       }
     },
-    sendParking() {
+    sendDivisions(types_id, childs_types_id) {
       if (this.form.parking_floors == "0") {
         this.form.parking_floors = "";
+      }
+      if (this.form.deposit_floors == "0") {
+        this.form.deposit_floors = "";
       }
       this.$v.$touch();
       if (this.$v.$invalid) {
         return;
       } else {
         this.sendingParking = true;
-        let infoParking = {
-          code: this.form.parking_name,
-          parent_id: this.form.parking_floors,
-          division_types_id: 4,
-          buildings_id: this.building.id,
-          division_childs_types_id: 5
-        };
+        let infoParking;
+        if (types_id == 4) {
+          infoParking = {
+            code: this.form.parking_name,
+            parent_id: this.form.parking_floors,
+            division_types_id: types_id,
+            buildings_id: this.building.id,
+            division_childs_types_id: childs_types_id,
+            childs: this.form.parking_positions
+          };
+        } else if (types_id == 6) {
+          infoParking = {
+            code: this.form.deposit_name,
+            parent_id: this.form.deposit_floors,
+            division_types_id: types_id,
+            buildings_id: this.building.id,
+            division_childs_types_id: childs_types_id,
+            childs: this.form.deposit_positions
+          };
+        }
         this.axios
-          .post(`buildings/${this.building.id}`, infoParking)
+          .post("divisions", infoParking)
           .then(res => {
             console.log(res);
             setTimeout(() => {
@@ -1433,6 +1672,12 @@ export default {
                 timer: 2000
               });
               this.sendingParking = false;
+              this.getChildsBuilding(this.option);
+              if (types_id == 4) {
+                this.hideModalParking();
+              } else if (types_id == 6) {
+                this.hideModalDeposit();
+              }
               //this.$swal("Hello Vue world!!!");
             }, 1000);
           })
@@ -1440,6 +1685,20 @@ export default {
             console.error(err);
           });
       }
+    },
+    dataModalParking(item) {
+      //console.log(item);
+      this.form.parking_floors = item.parent_id;
+      this.form.parking_name = item.code;
+      this.form.parking_positions = item.childrens.length;
+      this.status_save_parking = false;
+    },
+    dataModalDeposit(item) {
+      //console.log(item);
+      this.form.deposit_floors = item.parent_id;
+      this.form.deposit_name = item.code;
+      this.form.deposit_positions = item.childrens.length;
+      this.status_save_deposit = false;
     }
   }
 };
