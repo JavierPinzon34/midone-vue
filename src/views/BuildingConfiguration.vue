@@ -1639,7 +1639,6 @@ export default {
       if (this.$v.$invalid) {
         return;
       } else {
-        this.sendingParking = true;
         let infoParking;
         if (types_id == 4) {
           infoParking = {
@@ -1671,7 +1670,6 @@ export default {
                 showConfirmButton: true,
                 timer: 2000
               });
-              this.sendingParking = false;
               this.getChildsBuilding(this.option);
               if (types_id == 4) {
                 this.hideModalParking();

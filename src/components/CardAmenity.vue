@@ -8,14 +8,14 @@
           <img
             alt="Midone Tailwind HTML Admin Template"
             class="rounded-md"
-            :src="require(`@/assets/images/${dataInfo.images[0]}`)"
+            :src="require(`@/assets/images/preview-6.jpg`)"
           />
         </div>
         <a href="" class="block font-medium text-base mt-5">{{
-          dataInfo.news[0].title
+          dataInfo.code
         }}</a>
         <div class="text-gray-700 dark:text-gray-600 mt-2">
-          {{ dataInfo.news[0].short_content }}
+          {{ dataInfo.metas[3].value }}
         </div>
       </div>
       <!-- END: content -->
@@ -34,8 +34,11 @@
         class="flex items-center px-5 py-3 border-t border-gray-200 dark:border-dark-5"
       >
         <router-link
-          to="/amenity-edit"
           class="intro-x w-8 h-8 flex items-center ml-auto justify-center rounded-full bg-theme-3 text-white ml-2"
+          :to="{
+            path: '/amenity-edit',
+            query: { id: dataInfo.id }
+          }"
         >
           <EditIcon class="w-3 h-3" />
         </router-link>

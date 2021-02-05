@@ -26,6 +26,8 @@ const state = () => {
     floors: [],
     parkings: [],
     deposits: [],
+    amenities: [],
+    building: [],
     allRow: 0
   };
 };
@@ -41,6 +43,12 @@ const mutations = {
   },
   setDeposits(state, data) {
     state.deposits = data;
+  },
+  setAmenities(state, data) {
+    state.amenities = data;
+  },
+  setBuilding(state, data) {
+    state.building = data;
   }
 };
 
@@ -67,6 +75,19 @@ const actions = {
       }
     });
     commit("setDeposits", data.data);
+  },
+  getAmenities: async function({ commit }, param) {
+    const data = await axios.get("/divisions", {
+      params: {
+        type: param.type,
+        buildings_id: param.buildings_id
+      }
+    });
+    commit("setAmenities", data.data);
+  },
+  getBuilding: async function({ commit }) {
+    const data = await axios.get("/buildings");
+    commit("setBuilding", data.data);
   }
 };
 
@@ -79,6 +100,12 @@ const getters = {
   },
   allDeposits: state => {
     return state.deposits.content;
+  },
+  allAmenities: state => {
+    return state.amenities.content;
+  },
+  building: state => {
+    return state.building.content;
   }
 };
 

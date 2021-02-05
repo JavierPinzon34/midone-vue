@@ -1021,6 +1021,9 @@ export default {
       salesReportFilter: ""
     };
   },
+  created() {
+    this.$store.dispatch("getBuilding");
+  },
   methods: {
     prevImportantNotes() {
       this.$refs["important-notes"].prev();
