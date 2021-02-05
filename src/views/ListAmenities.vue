@@ -47,6 +47,7 @@ export default {
       buildings_id: this.building.id
     };
     this.$store.dispatch("getAmenities", params);
+    this.$store.dispatch("getBuilding");
   }
 };
 </script>
