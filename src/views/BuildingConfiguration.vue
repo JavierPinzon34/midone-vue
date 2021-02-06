@@ -725,13 +725,27 @@
                       {{ item.childrens.length }}
                     </td>
                     <td class="border-b whitespace-no-wrap">
+                      <!-- <a
+                        href="javascript:;"
+                        data-toggle="modal"
+                        data-target="#medium-modal-parking"
+                        class="button mr-1 w-10 mb-2 inline-block bg-theme-1 text-white"
+                        @click="dataModalParking(item)"
+                        ><EyeIcon class="w-4 h-4" />
+                      </a> -->
+                      <router-link
+                        class="button mr-1 w-10 mb-2 inline-block bg-theme-1 text-white"
+                        :to="{ name: 'amenity-edit' }"
+                      >
+                        <EyeIcon class="w-4 h-4" />
+                      </router-link>
                       <a
                         href="javascript:;"
                         data-toggle="modal"
                         data-target="#medium-modal-parking"
-                        class="button mr-1 w-10 mb-2 inline-block bg-gray-500 text-white"
+                        class="button mr-1 w-10 mb-2 inline-block bg-theme-12 text-white"
                         @click="dataModalParking(item)"
-                        ><EyeIcon class="w-4 h-4" />
+                        ><EditIcon class="w-4 h-4" />
                       </a>
                       <!-- <router-link
                         class="button flex min-w-10 w-10 bg-gray-500 text-white"

@@ -42,12 +42,24 @@ export default {
     }
   },
   created() {
-    const params = {
-      type: 8,
-      buildings_id: this.building.id
-    };
-    this.$store.dispatch("getAmenities", params);
     this.$store.dispatch("getBuilding");
+  },
+  mounted() {
+    if (this.building) {
+      const params = {
+        type: 8,
+        buildings_id: this.building.id
+      };
+      this.$store.dispatch("getAmenities", params);
+    } else {
+      setTimeout(() => {
+        const params = {
+          type: 8,
+          buildings_id: this.building.id
+        };
+        this.$store.dispatch("getAmenities", params);
+      }, 1000);
+    }
   }
 };
 </script>

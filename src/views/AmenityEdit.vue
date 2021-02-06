@@ -80,9 +80,9 @@
         <label class="font-medium text-lg">Pisos:</label>
         <div>
           <select
-            v-model="metas.floor"
+            v-model="form.parent_id"
             class="input w-full border flex-1"
-            :class="{ 'border-red-500': $v.metas.floor.$error }"
+            :class="{ 'border-red-500': $v.form.parent_id.$error }"
           >
             <option value="0">Seleccione una opción</option>
             <option
@@ -93,9 +93,9 @@
               {{ floor.code }}
             </option>
           </select>
-          <template v-if="$v.metas.floor.$error">
+          <template v-if="$v.form.parent_id.$error">
             <div
-              v-if="!$v.metas.floor.required"
+              v-if="!$v.form.parent_id.required"
               class="font-medium text-xs text-red-500 mt-1 ml-1"
             >
               Seleccione el Piso
@@ -401,12 +401,12 @@ export default {
         code: "",
         division_types_id: 8,
         buildings_id: "",
-        metas: []
+        metas: [],
+        parent_id: ""
       },
       metas: {
         capacity: "",
         value: "",
-        floor: "0",
         description: "",
         rules: "",
         start: "0",
@@ -448,6 +448,9 @@ export default {
         code: {
           required,
           maxLength: maxLength(100)
+        },
+        parent_id: {
+          required
         }
       },
       metas: {
@@ -455,9 +458,6 @@ export default {
           required
         },
         value: {
-          required
-        },
-        floor: {
           required
         },
         description: {
@@ -514,15 +514,15 @@ export default {
           this.amenity = res.data.content;
           console.log(this.amenity);
           this.form.code = this.amenity.code;
+          this.form.parent_id = this.amenity.parent_id;
           this.metas.capacity = this.amenity.metas[0].value;
           this.metas.value = this.amenity.metas[1].value;
-          this.metas.floor = this.amenity.metas[2].value;
-          this.metas.description = this.amenity.metas[3].value;
-          this.metas.rules = this.amenity.metas[4].value;
-          this.metas.start = this.amenity.metas[5].value;
-          this.metas.end = this.amenity.metas[6].value;
-          this.metas.color = this.amenity.metas[7].value;
-          this.metas.status = this.amenity.metas[8].value;
+          this.metas.description = this.amenity.metas[2].value;
+          this.metas.rules = this.amenity.metas[3].value;
+          this.metas.start = this.amenity.metas[4].value;
+          this.metas.end = this.amenity.metas[5].value;
+          this.metas.color = this.amenity.metas[6].value;
+          this.metas.status = this.amenity.metas[7].value;
         })
         .catch(err => {
           console.error(err);
@@ -531,7 +531,7 @@ export default {
   },
   methods: {
     sendAmenity(evento) {
-      if (this.metas.floor == "0") {
+      if (this.metas.parent_id == "0") {
         this.metas.floor = "";
       }
       if (this.metas.start == "0") {

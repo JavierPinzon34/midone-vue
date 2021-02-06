@@ -1,7 +1,12 @@
 <template>
   <!-- BEGIN: Blog Layout -->
   <div class="intro-y col-span-12 md:col-span-6 xl:col-span-4 box">
-    <router-link to="/amenity-details">
+    <router-link
+      :to="{
+        path: '/amenity-edit',
+        query: { id: dataInfo.id }
+      }"
+    >
       <!-- BEGIN: content -->
       <div class="p-5">
         <div class="h-40 xxl:h-56 image-fit">
