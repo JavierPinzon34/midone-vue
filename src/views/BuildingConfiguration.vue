@@ -735,7 +735,10 @@
                       </a> -->
                       <router-link
                         class="button mr-1 w-10 mb-2 inline-block bg-theme-1 text-white"
-                        :to="{ name: 'amenity-edit' }"
+                        :to="{
+                          name: 'side-menu-lista-parqueaderos',
+                          query: { id: item.id }
+                        }"
                       >
                         <EyeIcon class="w-4 h-4" />
                       </router-link>
@@ -1033,13 +1036,22 @@
                       {{ item.childrens.length }}
                     </td>
                     <td class="border-b whitespace-no-wrap">
+                      <router-link
+                        class="button mr-1 w-10 mb-2 inline-block bg-theme-1 text-white"
+                        :to="{
+                          name: 'side-menu-lista-depositos',
+                          query: { id: item.id }
+                        }"
+                      >
+                        <EyeIcon class="w-4 h-4" />
+                      </router-link>
                       <a
                         href="javascript:;"
                         data-toggle="modal"
                         data-target="#medium-modal-deposit"
                         class="button mr-1 w-10 mb-2 inline-block bg-gray-500 text-white"
                         @click="dataModalDeposit(item)"
-                        ><EyeIcon class="w-4 h-4" />
+                        ><EditIcon class="w-4 h-4" />
                       </a>
                     </td>
                   </tr>

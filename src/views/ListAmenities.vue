@@ -33,33 +33,33 @@ export default {
   components: {
     CardAmenity
   },
+  data() {
+    return {
+      building: ""
+    };
+  },
   computed: {
     allAmenities() {
       return this.$store.getters.allAmenities;
-    },
-    building() {
-      return this.$store.getters.building;
     }
   },
   created() {
-    this.$store.dispatch("getBuilding");
-  },
-  mounted() {
-    if (this.building) {
-      const params = {
-        type: 8,
-        buildings_id: this.building.id
-      };
-      this.$store.dispatch("getAmenities", params);
-    } else {
-      setTimeout(() => {
+    this.axios({
+      method: "get",
+      url: "buildings"
+    })
+      .then(res => {
+        //console.log(res.data.content);
+        this.building = res.data.content;
         const params = {
           type: 8,
           buildings_id: this.building.id
         };
         this.$store.dispatch("getAmenities", params);
-      }, 1000);
-    }
+      })
+      .catch(err => {
+        console.error(err);
+      });
   }
 };
 </script>

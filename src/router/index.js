@@ -14,6 +14,8 @@ import CardAmenityDetails from "../views/CardAmenityDetails";
 import NewAmenityReserve from "../views/NewAmenityReserve";
 import BuildingConfiguration from "../views/BuildingConfiguration";
 import ListProperties from "../views/ListProperties";
+import ListParking from "../views/ListParking";
+import ListDeposit from "../views/ListDeposit";
 import CommonAreas from "../views/CommonAreas";
 import OwnerReservations from "../views/OwnerReservations";
 import ReservoirGenerator from "../views/ReservoirGenerator";
@@ -88,6 +90,16 @@ const routes = [
         path: "list-properties",
         name: "side-menu-lista-inmuebles",
         component: ListProperties
+      },
+      {
+        path: "list-parkings",
+        name: "side-menu-lista-parqueaderos",
+        component: ListParking
+      },
+      {
+        path: "list-deposits",
+        name: "side-menu-lista-depositos",
+        component: ListDeposit
       },
       {
         path: "common-areas",

@@ -1,20 +1,19 @@
 <template>
   <div class="item-property">
     <div
-      v-if="items.type == 1 || items.type == 3"
+      v-if="items.division_types_id == 5 || items.division_types_id == 7"
       class="h-48 text-white bg-green-500 p-3 rounded relative"
     >
       <div class="mb-2">
-        <span class="text-3xl font-bold">{{ items.text }}</span>
+        <span class="text-3xl font-bold">{{ items.code }}</span>
       </div>
       <button
-        v-if="items.type == 1"
         class="button flex min-w-10 w-10 bg-transparent text-white"
         to="/amenity-edit"
       >
         <SettingsIcon class="w-4 h-4" />
       </button>
-      <router-link
+      <!-- <router-link
         v-if="items.type == 3"
         class="button flex min-w-10 w-10 bg-transparent text-white"
         to="/amenity-edit"
@@ -29,9 +28,9 @@
         class="absolute bottom-0 left-0 w-full text-center bg-green-600 rounded"
       >
         <router-link to="/reservoir-generator">Generar RGT Huesped</router-link>
-      </div>
+      </div> -->
     </div>
-    <div v-if="items.type == 2" class="h-48 text-white bg-blue-500 rounded">
+    <!-- <div v-if="items.division_types_id == 3" class="h-48 text-white bg-blue-500 rounded">
       <div class="p-3">
         <div>
           <span class="text-3xl font-bold">{{ items.text }}</span>
@@ -57,7 +56,7 @@
           </button>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 

@@ -20,7 +20,8 @@
           dataInfo.code
         }}</a>
         <div class="text-gray-700 dark:text-gray-600 mt-2">
-          {{ dataInfo.metas[3].value }}
+          <!-- eslint-disable-next-line -->
+          <p v-if="dataInfo.metas" v-html="dataInfo.metas[3].value"></p>
         </div>
       </div>
       <!-- END: content -->
