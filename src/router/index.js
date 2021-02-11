@@ -20,6 +20,8 @@ import CommonAreas from "../views/CommonAreas";
 import OwnerReservations from "../views/OwnerReservations";
 import ReservoirGenerator from "../views/ReservoirGenerator";
 import Documents from "../views/Documents";
+import NewBlog from "../views/NewBlog";
+import Blog from "../views/Blog";
 import Login from "../views/Login";
 import Register from "../views/Register";
 import ErrorPage from "../views/ErrorPage";
@@ -120,6 +122,16 @@ const routes = [
         path: "documents",
         name: "side-menu-reservoir-documents",
         component: Documents
+      },
+      {
+        path: "blog",
+        name: "side-menu-noticias",
+        component: Blog
+      },
+      {
+        path: "new-blog",
+        name: "side-menu-nueva-noticia",
+        component: NewBlog
       },
       {
         path: "inbox",

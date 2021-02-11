@@ -28,6 +28,8 @@ const state = () => {
     deposits: [],
     amenities: [],
     building: [],
+    blogTypes: [],
+    blogs: [],
     allRow: 0
   };
 };
@@ -49,6 +51,12 @@ const mutations = {
   },
   setBuilding(state, data) {
     state.building = data;
+  },
+  setBlogType(state, data) {
+    state.blogTypes = data;
+  },
+  setBlogs(state, data) {
+    state.blogs = data;
   }
 };
 
@@ -88,6 +96,14 @@ const actions = {
   getBuilding: async function({ commit }) {
     const data = await axios.get("/buildings");
     commit("setBuilding", data.data);
+  },
+  getBlogTypes: async function({ commit }) {
+    const data = await axios.get("/blog-type");
+    commit("setBlogType", data.data);
+  },
+  getBlogs: async function({ commit }) {
+    const data = await axios.get("/blogs");
+    commit("setBlogs", data.data);
   }
 };
 
@@ -106,6 +122,12 @@ const getters = {
   },
   building: state => {
     return state.building.content;
+  },
+  blogTypes: state => {
+    return state.blogTypes.content;
+  },
+  blogs: state => {
+    return state.blogs.content;
   }
 };
 

@@ -1,9 +1,9 @@
 <template>
   <!-- BEGIN: Blog Layout -->
-  <div class="intro-y col-span-12 md:col-span-6 xl:col-span-4 box">
+  <div class="intro-y col-span-12 mb-5 md:col-span-6 xl:col-span-4 box">
     <router-link
       :to="{
-        name: 'side-menu-nueva-noticia',
+        path: '/amenity-edit',
         query: { id: dataInfo.id }
       }"
     >
@@ -17,23 +17,23 @@
           />
         </div>
         <a href="" class="block font-medium text-base mt-5">{{
-          dataInfo.code
+          dataInfo.title
         }}</a>
         <div class="text-gray-700 dark:text-gray-600 mt-2">
           <!-- eslint-disable-next-line -->
-          <p v-if="dataInfo.metas" v-html="dataInfo.metas[3].value"></p>
+          <p v-if="dataInfo.content" v-html="dataInfo.content"></p>
         </div>
       </div>
       <!-- END: content -->
       <!-- BEGIN: state -->
-      <div class="px-5 pt-3 pb-3 border-t border-gray-200 dark:border-dark-5">
+      <!-- <div class="px-5 pt-3 pb-3 border-t border-gray-200 dark:border-dark-5">
         <div class="w-full flex items-center">
           <div class="items-center">
             <span class="px-3 py-1 rounded-full bg-theme-9 text-white mr-2" />
             <span class="text-lg">Abierto</span>
           </div>
         </div>
-      </div>
+      </div> -->
       <!-- END: state -->
       <!-- BEGIN: buttons -->
       <div

@@ -296,6 +296,7 @@
               <VueDropzone
                 id="dropzone-single"
                 :use-custom-slot="true"
+                :vdropzone-success="uploadSuccess"
                 :options="dropzoneSingleOptions"
                 class="dropzone font-roboto border-gray-200 border-dashed text-gray-800 hover:bg-transparent"
               >
@@ -431,10 +432,11 @@ export default {
         url: "https://httpbin.org/post",
         thumbnailWidth: 150,
         maxFilesize: 0.5,
+        maxFiles: 5,
         addRemoveLinks: true
       },
       dropzoneSingleOptions: {
-        url: "https://httpbin.org/post",
+        url: "http://127.0.0.1:8000/api/v1/files",
         thumbnailWidth: 150,
         maxFilesize: 0.5,
         maxFiles: 1,
@@ -558,9 +560,20 @@ export default {
               value: element[1]
             });
           });
-          //console.log(this.form.metas);
+          let formData = new FormData();
+          formData.append("code", this.form.code);
+          formData.append("parent_id", this.form.parent_id);
+          formData.append("division_types_id", this.form.division_types_id);
+          formData.append("buildings_id", this.form.buildings_id);
+          formData.append("metas", this.form.metas);
+          formData.append("file", this.fileUpload); //get last element for array
           this.axios
-            .post("divisions", this.form)
+            .post("divisions", formData, {
+              headers: {
+                "Content-Type": "multipart/form-data"
+              }
+            })
+            //console.log(this.form.metas);
             .then(res => {
               console.log(res);
               setTimeout(() => {
@@ -580,6 +593,10 @@ export default {
           //editar
         }
       }
+    },
+    uploadSuccess(file, response) {
+      console.log("File Successfully Uploaded with file name: ".response.file);
+      this.fileName = response.file;
     }
   }
 };

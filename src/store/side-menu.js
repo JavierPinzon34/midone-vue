@@ -117,7 +117,7 @@ const state = () => {
       },
       {
         icon: "ZapIcon",
-        pageName: "side-menu-news",
+        pageName: "side-menu-noticias",
         title: "Noticias Edificio"
       }
       /* {
