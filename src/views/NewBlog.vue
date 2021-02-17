@@ -11,29 +11,37 @@
       <!-- BEGIN: title input -->
       <div class="w-full col-span-1 md:col-span-2">
         <label class="font-medium text-lg">Titulo:</label>
-        <input v-model="form.title" type="text" class="input w-full border" />
-        <!-- :class="{ 'border-red-500': $v.form.code.$error }"
-        <template v-if="$v.form.code.$error">
+        <input
+          v-model="form.title"
+          type="text"
+          class="input w-full border"
+          :class="{ 'border-red-500': $v.form.title.$error }"
+        />
+        <template v-if="$v.form.title.$error">
           <div
-            v-if="!$v.form.code.required"
+            v-if="!$v.form.title.required"
             class="font-medium text-xs text-red-500 mt-1 ml-1"
           >
-            Digite el Nombre
+            Digite el Título
           </div>
           <div
-            v-if="!$v.form.code.maxLength"
+            v-if="!$v.form.title.maxLength"
             class="font-medium text-xs text-red-500 mt-1 ml-1"
           >
             Exede los 100 Caracteres
           </div>
-        </template> -->
+        </template>
       </div>
       <!-- END: title input -->
       <!-- BEGIN: Select type -->
       <div class="w-full col-span-1 md:col-span-2">
         <label class="font-medium text-lg">Categoria:</label>
         <div>
-          <select v-model="form.type" class="input w-full border flex-1">
+          <select
+            v-model="form.blog_types_id"
+            class="input w-full border flex-1"
+            :class="{ 'border-red-500': $v.form.blog_types_id.$error }"
+          >
             <option value="0">Seleccione una opción</option>
             <option
               v-for="(types, index) in allBlogTypes"
@@ -43,15 +51,14 @@
               {{ types.name }}
             </option>
           </select>
-          <!-- :class="{ 'border-red-500': $v.form.parent_id.$error }"
-          <template v-if="$v.form.parent_id.$error">
+          <template v-if="$v.form.blog_types_id.$error">
             <div
-              v-if="!$v.form.parent_id.required"
+              v-if="!$v.form.blog_types_id.required"
               class="font-medium text-xs text-red-500 mt-1 ml-1"
             >
-              Seleccione el Piso
+              Seleccione la Categoria
             </div>
-          </template> -->
+          </template>
         </div>
       </div>
       <!-- END: Select type -->
@@ -59,24 +66,27 @@
     <div class="grid grid-cols-1 gap-2 mt-4">
       <div class="w-full col-span-1">
         <label class="font-medium text-lg">Descripción:</label>
-        <div class="preview">
+        <div
+          class="preview"
+          :class="{ 'is-invalid-editor': $v.form.content.$error }"
+        >
           <CKEditor
             v-model="form.content"
             :editor="classicEditor"
             :config="simpleEditorConfig"
             :options="{
-              classNames: 'rounded-3xl'
+              classNames: 'rounded'
             }"
           />
-          <!-- <template v-if="$v.metas.description.$error">
-            <div
-              v-if="!$v.metas.description.required"
-              class="font-medium text-xs text-red-500 mt-1 ml-1"
-            >
-              Digite la Descripción
-            </div>
-          </template> -->
         </div>
+        <template v-if="$v.form.content.$error">
+          <div
+            v-if="!$v.form.content.required"
+            class="font-medium text-xs text-red-500 mt-1 ml-1"
+          >
+            Digite el Contenido
+          </div>
+        </template>
       </div>
     </div>
     <div class="grid grid-cols-1 gap-2 mt-5">
@@ -109,16 +119,16 @@
     <!-- BEGIN: Document title -->
     <div class="intro-y flex flex-col sm:flex-row mt-8">
       <button
-        v-if="amenityId"
+        v-if="blogId"
         class="button w-24 justify-center block bg-theme-9 text-white"
-        @click="sendAmenity(2)"
+        @click="sendBlog(2)"
       >
         Actualizar
       </button>
       <button
         v-else
         class="button w-24 justify-center block bg-theme-9 text-white"
-        @click="sendAmenity(1)"
+        @click="sendBlog(1)"
       >
         Guardar
       </button>
@@ -153,14 +163,11 @@ import UnderlinePlugin from "@ckeditor/ckeditor5-basic-styles/src/underline";
 import ItalicPlugin from "@ckeditor/ckeditor5-basic-styles/src/italic";
 import LinkPlugin from "@ckeditor/ckeditor5-link/src/link";
 import vue2Dropzone from "vue2-dropzone";
-/* import {
+import {
   required,
   maxLength
-  sameAs
-} from "vuelidate/lib/validators"; 
-*/
-/* importamos las propiedades de la validación */
-
+  /* sameAs */
+} from "vuelidate/lib/validators"; /* importamos las propiedades de la validación */
 export default {
   components: {
     CKEditor: CKEditor.component,
@@ -169,14 +176,12 @@ export default {
   data() {
     return {
       classicEditor: ClassicEditor,
-      amenity: "",
+      blog: "",
       building: "",
       form: {
         title: "",
-        division_types_id: 8,
         buildings_id: "",
-        parent_id: "",
-        type: "",
+        blog_types_id: "0",
         content: ""
       },
       simpleEditorConfig: {
@@ -201,48 +206,25 @@ export default {
       }
     };
   },
-  /* validations() {
+  validations() {
     let form = {
       form: {
-        code: {
+        title: {
           required,
           maxLength: maxLength(100)
         },
-        parent_id: {
-          required
-        }
-      },
-      metas: {
-        capacity: {
+        blog_types_id: {
           required
         },
-        value: {
-          required
-        },
-        description: {
-          required
-        },
-        rules: {
-          required
-        },
-        start: {
-          required
-        },
-        end: {
-          required
-        },
-        color: {
-          required
-        },
-        status: {
+        content: {
           required
         }
       }
     };
     return form;
-  }, */
+  },
   computed: {
-    amenityId() {
+    blogId() {
       return this.$route.query.id;
     },
     allFloors() {
@@ -265,27 +247,19 @@ export default {
       .catch(err => {
         console.error(err);
       });
-    this.$store.dispatch("getFloors", 3);
     this.$store.dispatch("getBlogTypes");
   },
   mounted() {
-    if (this.amenityId) {
-      console.log(this.amenityId);
+    if (this.blogId) {
+      console.log(this.blogId);
       this.axios
-        .get(`divisions?id=${this.amenityId}`)
+        .get(`blogs?id=${this.blogId}`)
         .then(res => {
-          this.amenity = res.data.content;
-          console.log(this.amenity);
-          this.form.code = this.amenity.code;
-          this.form.parent_id = this.amenity.parent_id;
-          this.metas.capacity = this.amenity.metas[0].value;
-          this.metas.value = this.amenity.metas[1].value;
-          this.metas.description = this.amenity.metas[2].value;
-          this.metas.rules = this.amenity.metas[3].value;
-          this.metas.start = this.amenity.metas[4].value;
-          this.metas.end = this.amenity.metas[5].value;
-          this.metas.color = this.amenity.metas[6].value;
-          this.metas.status = this.amenity.metas[7].value;
+          this.blog = res.data.content;
+          console.log(this.blog);
+          this.form.title = this.blog.title;
+          this.form.content = this.blog.content;
+          this.form.blog_types_id = this.blog.blog_types_id;
         })
         .catch(err => {
           console.error(err);
@@ -293,43 +267,42 @@ export default {
     }
   },
   methods: {
-    sendAmenity(evento) {
-      if (this.metas.parent_id == "0") {
-        this.metas.floor = "";
-      }
-      if (this.metas.start == "0") {
-        this.metas.start = "";
-      }
-      if (this.metas.end == "0") {
-        this.metas.end = "";
-      }
-      if (this.metas.status == "0") {
-        this.metas.status = "";
+    sendBlog(evento) {
+      if (this.form.blog_types_id == 0) {
+        this.form.blog_types_id = "";
       }
       this.$v.$touch();
       if (this.$v.$invalid) {
         return;
       } else {
         if (evento == 1) {
-          const result = Object.keys(this.metas).map(key => [
-            key,
-            this.metas[key]
-          ]);
-          result.forEach(element => {
-            this.form.metas.push({
-              key: element[0],
-              value: element[1]
-            });
-          });
-          let formData = new FormData();
+          /* let formData = new FormData();
           formData.append("code", this.form.code);
           formData.append("parent_id", this.form.parent_id);
           formData.append("division_types_id", this.form.division_types_id);
           formData.append("buildings_id", this.form.buildings_id);
           formData.append("metas", this.form.metas);
-          formData.append("file", this.fileUpload); //get last element for array
+          formData.append("file", this.fileUpload); //get last element for array */
           this.axios
-            .post("divisions", formData, {
+            .post("blogs", this.form)
+            .then(res => {
+              //console.log(res)
+              setTimeout(() => {
+                this.$swal({
+                  icon: "success",
+                  title: res.data.message,
+                  showConfirmButton: true,
+                  timer: 2000
+                });
+                //this.getChildsBuilding(this.option);
+                this.$router.push("/blog");
+              }, 1000);
+            })
+            .catch(err => {
+              console.error(err);
+            });
+          /* this.axios
+            .post("blogs", this.form, {
               headers: {
                 "Content-Type": "multipart/form-data"
               }
@@ -349,9 +322,27 @@ export default {
             })
             .catch(err => {
               console.error(err);
-            });
+            }); */
         } else {
           //editar
+          this.axios
+            .put(`blogs/${this.blogId}`, this.form)
+            .then(res => {
+              //console.log(res)
+              setTimeout(() => {
+                this.$swal({
+                  icon: "success",
+                  title: res.data.message,
+                  showConfirmButton: true,
+                  timer: 2000
+                });
+                //this.getChildsBuilding(this.option);
+                this.$router.push("/blog");
+              }, 1000);
+            })
+            .catch(err => {
+              console.error(err);
+            });
         }
       }
     },
@@ -365,5 +356,9 @@ export default {
 <style lang="scss">
 .color-custom {
   height: 39px !important;
+}
+.is-invalid-editor {
+  border: 1px solid #f56565;
+  border-radius: 3px;
 }
 </style>

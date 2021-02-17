@@ -3,7 +3,7 @@
   <div class="intro-y col-span-12 mb-5 md:col-span-6 xl:col-span-4 box">
     <router-link
       :to="{
-        path: '/amenity-edit',
+        path: '/new-blog',
         query: { id: dataInfo.id }
       }"
     >
@@ -39,10 +39,11 @@
       <div
         class="flex items-center px-5 py-3 border-t border-gray-200 dark:border-dark-5"
       >
+        <p>{{ dataInfo.user.username }} Hace {{ days }} días.</p>
         <router-link
           class="intro-x w-8 h-8 flex items-center ml-auto justify-center rounded-full bg-theme-3 text-white ml-2"
           :to="{
-            path: '/amenity-edit',
+            path: '/new-blog',
             query: { id: dataInfo.id }
           }"
         >
@@ -70,6 +71,22 @@ export default {
     dataInfo: {
       type: Object,
       default: () => {}
+    }
+  },
+  data() {
+    return {
+      days: ""
+    };
+  },
+  mounted() {
+    let hoy = new Date();
+    let created = new Date(this.dataInfo.created_at);
+    let resta = hoy.getTime() - created.getTime();
+    this.days = this.financial(resta / 1000 / 60 / 60 / 24);
+  },
+  methods: {
+    financial(x) {
+      return Number.parseFloat(x).toFixed(2);
     }
   }
 };
