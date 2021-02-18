@@ -560,7 +560,7 @@ export default {
               value: element[1]
             });
           });
-          let formData = new FormData();
+          /* let formData = new FormData();
           formData.append("code", this.form.code);
           formData.append("parent_id", this.form.parent_id);
           formData.append("division_types_id", this.form.division_types_id);
@@ -576,6 +576,22 @@ export default {
             //console.log(this.form.metas);
             .then(res => {
               console.log(res);
+              setTimeout(() => {
+                this.$swal({
+                  icon: "success",
+                  title: res.data.message,
+                  showConfirmButton: true,
+                  timer: 2000
+                });
+                //this.getChildsBuilding(this.option);
+              }, 1000);
+            })
+            .catch(err => {
+              console.error(err);
+            }); */
+          this.axios
+            .post("divisions", this.form)
+            .then(res => {
               setTimeout(() => {
                 this.$swal({
                   icon: "success",
